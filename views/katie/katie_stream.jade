@@ -4,6 +4,10 @@ block css
   link(rel='stylesheet',href='/css/katie/katie_stream.css')
 
 block content
+  div(id='hearts')
+  form(id='chat-form')
+    input(type='text', name='message', id='chat-message' placeholder='Send Katie a message')
+    input(type='submit', val='Send') 
   
 block javascript
   script(src="/js/katie/katie_stream.js")

@@ -5,7 +5,7 @@ router.get('/', function(req,res,next){
 	res.render('katie/katie_stream.jade')
 })
 
-router.get('/chat-dashboard', function(req,res,next){
+router.get('/chat', function(req,res,next){
 	res.render("katie/katie_chat.jade")
 })
 

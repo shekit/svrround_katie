@@ -17,6 +17,8 @@ $(document).ready(function(){
 	var userDirection = $(".userDirection");
 	var userActive = $(".userActive");
 
+	var sendRecipe = $("#send-recipe")
+
 	var socket = io(socket_url+'/katiedashboard');
 
 	socket.on('stats', function(msg){
@@ -33,6 +35,19 @@ $(document).ready(function(){
 		console.log("new user");
 		var html = "<li><a href='#' class='user' data-val=" + msg + ">User</a></li>"
 		userList.append(html)
+	})
+
+	socket.on('location', function(msg){
+		if(msg){
+			console.log(msg.city)
+			console.log(msg.region)
+			console.log(msg.country)
+		}
+	})
+
+	$("body").on("click", "#send-recipe", function(event){
+		event.preventDefault();
+		socket.emit('recipe','this is my burrito recipe')
 	})
 
 	$("body").on('click', '.user', function(event){

@@ -3,10 +3,19 @@ var path = require('path');
 var favicon = require('serve-favicon');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var cors = require('cors')
+var cors = require('cors');
+
+var CronJob = require('cron').CronJob;
+var jsonfile = require('jsonfile');
+var util = require('util');
+jsonfile.spaces = 4;
+
+var dbfile = '/data/data.json'
 
 var routes = require('./routes/index');
 var katie = require('./routes/katie');
+
+var geoip = require('geoip-lite');
 
 var app = express();
 
@@ -67,49 +76,29 @@ var io = require('socket.io')(http);
 // socket connections for dashboard
 var dashboardio = io.of('/dashboard');
 
-var katiechatio = io.of('/katiechat');
-
 var katiestreamio = io.of('/katiestream');
 
+var katiechatio = io.of('/katiechat');
+
 var katiedashboardio = io.of('/katiedashboard');
-
-katiechatio.on('connection', function(socket){
-	console.log("KATIE CHAT")
-})
-
-katiestreamio.on('connection', function(socket){
-	console.log("KATIE STREAM")
-})
-
-katiedashboardio.on('connection', function(socket){
-	console.log("KATIE DASHBOARD")
-})
-
-
-dashboardio.on('connection', function(socket){
-	console.log("Dashboard viewer joined");
-	// do this so that dashboard is not considered a viewer
-	var id = socket.id
-	viewerStats["/"+id.substr(10)]["admin"] = true;
-
-	emitUserStats();
-
-	//console.log(viewerStats["/"+id.substr(10)])
-})
 
 // SAVE VIEWER stats - eventually move to DB
 var viewerStats = {}
 
-// this makes the dashboard a viewer as well, so adjust for it in dashboard socket namespace
-io.on('connection', function(socket){
-	console.log("Viewer connected")
+// io for live stream page
+katiestreamio.on('connection', function(socket){
+	console.log("New viewer for katie")
+
 	viewerStats[socket.id] = {
 		"heartCount":0,
 		"joined":new Date(),
 		"left":null,
+		"ip":"",
+		"location":"",
 		"active":true,
 		"creator":null,
 		"admin":false,
+		"messages":[],
 		"direction":[{
 			"x":0,
 			"y":0,
@@ -117,23 +106,22 @@ io.on('connection', function(socket){
 		}]
 	}
 
-	//console.log(viewerStats)
-
-	//send updated stats to dashboard
+	//send updated stats to katie's dashboard
 	emitUserStats();
 
-	//emit user id to dashboard
-	//dashboardio.emit("user",socket.id);
+	socket.on('chatMessage', function(data){
+		viewerStats[socket.id]["messages"].push(data);
+		console.log(viewerStats[socket.id]["messages"])
+		katiechatio.emit("chatMessage", data);
+	})
 
-	console.log("TOTAL ACTIVE VIEWERS: " + totalActiveViewers());
-
-	socket.on('disconnect', function(){
-		console.log('viewer disconnected');
-		viewerStats[socket.id]["active"] = false;
-		viewerStats[socket.id]["left"] = new Date(); 
-		console.log("TOTAL VIEWERS: " + totalViewers());
-		console.log("TOTAL ACTIVE VIEWERS: "+ totalActiveViewers())
-		emitUserStats();
+	socket.on('ip', function(data){
+		console.log(data)
+		console.log(typeof data);
+		viewerStats[socket.id]["ip"] = data;
+		var geo = geoip.lookup(data);
+		viewerStats[socket.id]["location"] = geo;
+		katiedashboardio.emit("location", geo);
 	})
 
 	socket.on('heartCount', function(data){
@@ -141,7 +129,8 @@ io.on('connection', function(socket){
 		viewerStats[socket.id]["heartCount"] += 1;
 		console.log("USER HEART COUNT: " + userHeartCount(socket.id))
 		console.log("TOTAL HEARTS: " + totalHeartCount())
-		emitUserStats()
+		emitUserStats();
+		saveData();
 	});
 
 	socket.on("direction", function(data){
@@ -153,7 +142,58 @@ io.on('connection', function(socket){
 
 	})
 
+	socket.on('disconnect', function(){
+		console.log('viewer disconnected');
+		viewerStats[socket.id]["active"] = false;
+		viewerStats[socket.id]["left"] = new Date(); 
+		console.log("TOTAL VIEWERS: " + totalViewers());
+		console.log("TOTAL ACTIVE VIEWERS: "+ totalActiveViewers())
+		emitUserStats();
+	})
 })
+
+function saveData(){
+	jsonfile.writeFile('./data/data.json', viewerStats, function(err){
+		if(err){
+			console.log("couldnt write to file: "+err)
+		} else {
+			console.log("Saved data to disk")
+		}
+	})
+}
+
+function emitUserStats(){
+	katiedashboardio.emit('stats', {'totalViewers':totalViewers(), 'activeViewers':totalActiveViewers(), 'totalHearts':totalHeartCount()})
+}
+
+// io for chat page for katie to see incoming comments
+katiechatio.on('connection', function(socket){
+	console.log("CHAT DASHBOARD IS ACTIVE")
+
+})
+
+// io for dashboard page for katie to see stats
+katiedashboardio.on('connection', function(socket){
+	console.log("ANALYTICS DASHBOARD IS ACTIVE");
+
+	socket.on('recipe', function(data){
+		katiestreamio.emit('recipe', data)
+	})
+})
+
+
+// dashboardio.on('connection', function(socket){
+// 	console.log("Dashboard viewer joined");
+// 	// do this so that dashboard is not considered a viewer
+// 	var id = socket.id
+// 	viewerStats["/"+id.substr(10)]["admin"] = true;
+
+// 	emitUserStats();
+
+// 	//console.log(viewerStats["/"+id.substr(10)])
+// })
+
+
 
 function findAvgUserDirection(id){
 	var x = 0;
@@ -259,9 +299,7 @@ function findFinalDirection(x,y,z){
 	return final_direction;
 }
 
-function emitUserStats(){
-	dashboardio.emit('stats', {'totalViewers':totalViewers(), 'activeViewers':totalActiveViewers(), 'totalHearts':totalHeartCount()})
-}
+
 
 // find total number of viewers who ever logged into this stream
 function totalViewers(){
