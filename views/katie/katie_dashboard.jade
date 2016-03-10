@@ -1,0 +1,42 @@
+extends ../layout
+
+block css
+  link(rel='stylesheet',href='/css/katie/katie_dashboard.css')
+
+block content
+  nav(class='navbar navbar-default navbar-inverse')
+    div(class='container-fluid')
+      div(class='navbar-header')
+        a(class='navbar-brand', href='#')
+          img(src='/images/logo.png', width='200')
+  div(class='container')
+    div(class='row')
+      div(class='col-md-3 text-center card')
+        span(class='glyphicon glyphicon-user')
+        h2 Total Viewers
+        h4(id='totalViewers') 0
+      div(class='col-md-3 text-center card')
+        span(class='glyphicon glyphicon-eye-open')
+        h2 Active Viewers
+        h4(id='activeViewers') 0
+      div(class='col-md-3 text-center card')
+        span(class='glyphicon glyphicon-heart')
+        h2 Total Hearts
+        h4(id='totalHearts') 0
+      div(class='col-md-3 text-center card')
+        span(class='glyphicon glyphicon-screenshot')
+        h2 Area of Interest
+        h4(id="direction") -
+    div(class='row')
+      div(class='col-md-3 text-center card')
+        span(class='glyphicon glyphicon-info-sign')
+        h2
+          a(href="#", id="viewUsers") View Users
+      div(class='col-md-3 text-center card')
+        ul(id="userList", class='list-unstyled')
+      div(class='col-md-6 text-center card')
+        div(id='userStats')
+  
+      
+block javascript
+  script(src='/js/katie/katie_dashboard.js')
