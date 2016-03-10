@@ -1,5 +1,5 @@
 $(document).ready(function(){
-	console.log("hello")
+	console.log("Katie Dashboard")
 
 	//var socket_url = "http://162.243.95.15:4567"
 	//var route_url = "http://162.243.95.15:3000"
@@ -17,7 +17,7 @@ $(document).ready(function(){
 	var userDirection = $(".userDirection");
 	var userActive = $(".userActive");
 
-	var socket = io(socket_url+'/dashboard');
+	var socket = io(socket_url+'/katiedashboard');
 
 	socket.on('stats', function(msg){
 		totalViewers.html(msg['totalViewers']);

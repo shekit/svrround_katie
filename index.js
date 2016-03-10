@@ -67,6 +67,24 @@ var io = require('socket.io')(http);
 // socket connections for dashboard
 var dashboardio = io.of('/dashboard');
 
+var katiechatio = io.of('/katiechat');
+
+var katiestreamio = io.of('/katiestream');
+
+var katiedashboardio = io.of('/katiedashboard');
+
+katiechatio.on('connection', function(socket){
+	console.log("KATIE CHAT")
+})
+
+katiestreamio.on('connection', function(socket){
+	console.log("KATIE STREAM")
+})
+
+katiedashboardio.on('connection', function(socket){
+	console.log("KATIE DASHBOARD")
+})
+
 
 dashboardio.on('connection', function(socket){
 	console.log("Dashboard viewer joined");
