@@ -10,6 +10,27 @@ var jsonfile = require('jsonfile');
 var util = require('util');
 jsonfile.spaces = 4;
 
+
+var nodemailer = require('nodemailer');
+var mandrillTransport = require('nodemailer-mandrill-transport')
+var mandrill = require('./config/config-dev.js')
+
+var transport = nodemailer.createTransport(mandrillTransport({
+	auth: {
+		apiKey: mandrill.mandrill_api_key
+	}
+}))
+
+
+transport.sendMail({
+	from: 'team@svrround.com',
+	to: 'abhishek3188@gmail.com',
+	subject: 'svrround data',
+	text: JSON.stringify(viewerStats), // make sure var is defined before calling this
+}, function(err){
+	console.log(err);
+})
+
 var dbfile = '/data/data.json'
 
 var routes = require('./routes/index');
@@ -83,7 +104,7 @@ var katiechatio = io.of('/katiechat');
 var katiedashboardio = io.of('/katiedashboard');
 
 // SAVE VIEWER stats - eventually move to DB
-var viewerStats = {}
+var viewerStats = {"hello":"can you hear me"}
 
 // io for live stream page
 katiestreamio.on('connection', function(socket){
@@ -130,7 +151,6 @@ katiestreamio.on('connection', function(socket){
 		console.log("USER HEART COUNT: " + userHeartCount(socket.id))
 		console.log("TOTAL HEARTS: " + totalHeartCount())
 		emitUserStats();
-		saveData();
 	});
 
 	socket.on("direction", function(data){
