@@ -4,7 +4,17 @@ block css
   link(rel='stylesheet',href='/css/katie/katie_chat.css')
 
 block content
-  ul(id="chat-messages")
+  nav(class='navbar navbar-default navbar-inverse')
+    div(class='container-fluid')
+      div(class='navbar-header')
+        a(class='navbar-brand', href='#')
+          img(src='/images/logo.png', width='200')
+  div(class='container')
+    div(class='row')
+      div(class='col-xs-12')
+        ul(id="chat-messages", class="list-unstyled")
+          li Hello Katie Quinn
+          li Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
   
 block javascript
   script(src="/js/katie/katie_chat.js")

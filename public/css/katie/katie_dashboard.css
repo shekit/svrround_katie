@@ -63,3 +63,21 @@ a:hover, a:active, a:visited {
 	font-weight: bold;
 }
 
+@media(max-width:768px ){
+	.glyphicon {
+		font-size: 40px;
+	}
+
+	h2 {
+		font-size: 20px
+	}
+
+	h4 {
+		font-size: 30px;
+	}
+
+	.card {
+		min-height: 200px;
+	}
+}
+

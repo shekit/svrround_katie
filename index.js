@@ -5,7 +5,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var cors = require('cors');
 
-var CronJob = require('cron').CronJob;
+
 var jsonfile = require('jsonfile');
 var util = require('util');
 jsonfile.spaces = 4;
@@ -22,14 +22,35 @@ var transport = nodemailer.createTransport(mandrillTransport({
 }))
 
 
-transport.sendMail({
-	from: 'team@svrround.com',
-	to: 'abhishek3188@gmail.com',
-	subject: 'svrround data',
-	text: JSON.stringify(viewerStats), // make sure var is defined before calling this
-}, function(err){
-	console.log(err);
-})
+
+//send mail to us with data for backup 
+var CronJob = require('cron').CronJob;
+
+var job = new CronJob('0 0 14 11 2 *', function(){
+
+	transport.sendMail({
+		from: 'team@svrround.com',
+		to: 'abhishek3188@gmail.com',
+		subject: 'svrround data',
+		text: JSON.stringify(viewerStats), // make sure var is defined before calling this
+	}, function(err){
+		console.log(err);
+	})
+}, null, true, 'America/New_York')
+
+// send another mail for backup
+var new_job = new CronJob('0 0 15 11 2 *', function(){
+
+	transport.sendMail({
+		from: 'team@svrround.com',
+		to: 'abhishek3188@gmail.com',
+		subject: 'svrround data',
+		text: JSON.stringify(viewerStats), // make sure var is defined before calling this
+	}, function(err){
+		console.log(err);
+	})
+}, null, true, 'America/New_York')
+
 
 var dbfile = '/data/data.json'
 
@@ -104,7 +125,7 @@ var katiechatio = io.of('/katiechat');
 var katiedashboardio = io.of('/katiedashboard');
 
 // SAVE VIEWER stats - eventually move to DB
-var viewerStats = {"hello":"can you hear me"}
+var viewerStats = {};
 
 // io for live stream page
 katiestreamio.on('connection', function(socket){
@@ -134,6 +155,7 @@ katiestreamio.on('connection', function(socket){
 		viewerStats[socket.id]["messages"].push(data);
 		console.log(viewerStats[socket.id]["messages"])
 		katiechatio.emit("chatMessage", data);
+		katiestreamio.emit("chatMessage", data);
 	})
 
 	socket.on('ip', function(data){
@@ -200,18 +222,6 @@ katiedashboardio.on('connection', function(socket){
 		katiestreamio.emit('recipe', data)
 	})
 })
-
-
-// dashboardio.on('connection', function(socket){
-// 	console.log("Dashboard viewer joined");
-// 	// do this so that dashboard is not considered a viewer
-// 	var id = socket.id
-// 	viewerStats["/"+id.substr(10)]["admin"] = true;
-
-// 	emitUserStats();
-
-// 	//console.log(viewerStats["/"+id.substr(10)])
-// })
 
 
 

@@ -7,6 +7,7 @@ $(document).ready(function(){
 
 	socket.on('chatMessage', function(msg){
 		var li = "<li>"+msg+"</li>"
+		
 		messageList.prepend(li)
 	})
 })

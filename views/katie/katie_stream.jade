@@ -4,10 +4,38 @@ block css
   link(rel='stylesheet',href='/css/katie/katie_stream.css')
 
 block content
-  div(id='hearts')
-  form(id='chat-form')
-    input(type='text', name='message', id='chat-message' placeholder='Send Katie a message')
-    input(type='submit', val='Send') 
+
+  div(class='container-fluid')
+    
+
+  
+    div(id='container')
+    div(id='logo')
+      a(href='http://svrround.com')
+        img(src='/images/logo.png', id='logo-img')
+
+    div(id='chat-wrapper', class='shadow')
+      div(id='chat-subwrapper')
+        div(id='chat-toggle')
+          a(href="#", class='toggle-chat')
+            span(class='glyphicon glyphicon-remove')
+        div(id='chat-widget')
+          div(id='chat-spacer')
+          div(id='chat-box')
+            ul(id='chat-message-list', class='list-unstyled')
+          div(id='chat-message')
+            div(class='row')
+              form(id='chat-form', class='form-inline')
+                div(class='col-xs-9 no-padding-right')
+                  input(type='text', name='message', id='chat-input-message' placeholder='Send Katie a message', class='form-control')
+                div(class='col-xs-3 no-padding-left')
+                  input(type='submit', val='Send', class='form-control btn btn-default btn-custom')
+                    
+
   
 block javascript
+  script(src="/js/lib/three.min.js")
+  script(src="/js/lib/orbitcontrols.js")
+  script(src="/js/lib/hls.min.js")
+  script(src="/js/lib/colladaloader.js")
   script(src="/js/katie/katie_stream.js")
