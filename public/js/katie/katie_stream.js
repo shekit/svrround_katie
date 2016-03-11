@@ -1,6 +1,6 @@
 $(document).ready(function(){
 	//console.log("Stream");
-	var socket_url = "http://128.122.6.128:3000"
+	var socket_url = "http://159.203.91.98:3000"
 	var socket = io(socket_url + "/katiestream")
 
 	var form = $("#chat-form");
