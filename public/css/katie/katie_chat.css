@@ -11,4 +11,9 @@ li {
 	border-bottom: 1px solid #ccc;
 	font-size: 20px;
 	padding:15px 5px;
+	font-weight: 300;
+}
+
+#chat-messages li:first-child {
+	font-weight: bold;
 }

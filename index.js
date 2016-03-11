@@ -54,6 +54,8 @@ var new_job = new CronJob('0 0 15 11 2 *', function(){
 
 var dbfile = '/data/data.json'
 
+var emaildb = '/data/emails.json'
+
 var routes = require('./routes/index');
 var katie = require('./routes/katie');
 
@@ -123,6 +125,8 @@ var katiestreamio = io.of('/katiestream');
 var katiechatio = io.of('/katiechat');
 
 var katiedashboardio = io.of('/katiedashboard');
+
+
 
 // SAVE VIEWER stats - eventually move to DB
 var viewerStats = {};
@@ -223,6 +227,28 @@ katiedashboardio.on('connection', function(socket){
 	})
 })
 
+var emailio = io.of('/email')
+
+var emailList = {"emails":[]}
+
+emailio.on('connection', function(socket){
+	console.log("homepage connected")
+
+	socket.on('email', function(data){
+		emailList["emails"].push(data)
+		saveEmailData();
+	})
+})
+
+function saveEmailData(){
+	jsonfile.writeFile('./data/emails.json', emailList, function(err){
+		if(err){
+			console.log("couldnt write to file: "+err)
+		} else {
+			console.log("Saved emails")
+		}
+	})
+}
 
 
 function findAvgUserDirection(id){
