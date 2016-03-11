@@ -28,7 +28,7 @@ html, body, canvas{
 	width: 50px;
 	width: 50px;
 	position: absolute;
-	top: 5%;
+	top: 10px;
 	right: 0;
 	z-index:200;
 	font-size: 20px;
@@ -69,9 +69,14 @@ html, body, canvas{
 #chat-message-list li {
 	padding-top: 5px;
 	padding-bottom: 5px;
-	border-bottom: 1px solid #bbb;
+	border-bottom: 1px solid #ccc;
 	font-size: 12px;
 	color: #eee;
+}
+
+.chat-row {
+	margin-right: 0;
+	margin-left: 35px;
 }
 
 #chat-message {
@@ -89,16 +94,22 @@ html, body, canvas{
 
 .no-padding-right{
 	padding-right: 0;
-	padding-left: 30px;
+	padding-left: 0;
 }
 
 .no-padding-left {
 	padding-left: 0;
-	padding-right: 30px;
+	padding-right: 0;
 }
 
 .btn, .form-control {
 	border-radius: 0;
+}
+
+.form-control:focus{
+	box-shadow: none;
+	-webkit-box-shadow: none;
+	border-color:#ccc;
 }
 
 .btn-custom, .btn-custom:active, .btn-custom:visited{

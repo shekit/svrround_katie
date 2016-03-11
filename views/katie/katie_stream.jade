@@ -24,12 +24,12 @@ block content
           div(id='chat-box')
             ul(id='chat-message-list', class='list-unstyled')
           div(id='chat-message')
-            div(class='row')
-              form(id='chat-form', class='form-inline')
+            div(class='row chat-row')
+              form(id='chat-form', class='form-inline' ,autocomplete='off')
                 div(class='col-xs-9 no-padding-right')
                   input(type='text', name='message', id='chat-input-message' placeholder='Send Katie a message', class='form-control')
                 div(class='col-xs-3 no-padding-left')
-                  input(type='submit', val='Send', class='form-control btn btn-default btn-custom')
+                  input(type='submit', value='Send', class='form-control btn btn-default btn-custom')
                     
 
   

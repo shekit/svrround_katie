@@ -4,7 +4,7 @@ $(document).ready(function(){
 	var socket = io(socket_url + "/katiestream")
 
 	var form = $("#chat-form");
-	var chatMessage = $("#chat-message");
+	var chatMessage = $("#chat-input-message");
 
 	var chatWrapper = $("#chat-wrapper")
 	var chatList = $("#chat-message-list")
