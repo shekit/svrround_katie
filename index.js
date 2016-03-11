@@ -114,11 +114,8 @@ app.get('/user-list', function(req,res,next){
 
 //********* SOCKET STUFF  **********//
 
-// socket data from unity
 var io = require('socket.io')(http);
 
-// socket connections for dashboard
-var dashboardio = io.of('/dashboard');
 
 var katiestreamio = io.of('/katiestream');
 
@@ -126,7 +123,25 @@ var katiechatio = io.of('/katiechat');
 
 var katiedashboardio = io.of('/katiedashboard');
 
+var isActive = false;
 
+var startstreamio = io.of('/startstream');
+
+startstreamio.on('connection', function(socket){
+	console.log("Trigger page connected")
+
+	socket.on('activate', function(data){
+		isActive = true;
+		katiestreamio.emit('activate','yes')
+		console.log("Activated Stream")
+	})
+
+	socket.on('deactivate', function(data){
+		isActive = false;
+		katiestreamio.emit('deactivate','yes')
+		console.log("Deactivated stream")
+	})
+})
 
 // SAVE VIEWER stats - eventually move to DB
 var viewerStats = {};
@@ -154,6 +169,11 @@ katiestreamio.on('connection', function(socket){
 
 	//send updated stats to katie's dashboard
 	emitUserStats();
+
+	// emit status of live stream to the client
+	socket.on('isActive', function(data){
+		socket.emit("status", isActive)
+	})
 
 	socket.on('chatMessage', function(data){
 		viewerStats[socket.id]["messages"].push(data);
@@ -184,7 +204,7 @@ katiestreamio.on('connection', function(socket){
 		console.log({"x":data.x,"y":data.y,"z":data.z})
 		var avgActiveDirection = findAvgActiveDirection()
 		
-		dashboardio.emit('direction' , avgActiveDirection)
+		katiedashboardio.emit('direction' , avgActiveDirection)
 
 	})
 
@@ -195,6 +215,7 @@ katiestreamio.on('connection', function(socket){
 		console.log("TOTAL VIEWERS: " + totalViewers());
 		console.log("TOTAL ACTIVE VIEWERS: "+ totalActiveViewers())
 		emitUserStats();
+		saveData();
 	})
 })
 

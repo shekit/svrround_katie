@@ -1,0 +1,24 @@
+extends layout
+
+block css
+  link(rel='stylesheet',href='/css/activate.css')
+
+block content
+  div(class='container')
+    div(class='row')
+      div(class='col-xs-12')
+        br
+        br
+        br
+        a(href='#', id='activate', class='btn btn-lg btn-block btn-success') Activate
+
+    div(class='row')
+      div(class='col-xs-12')
+        br
+        br
+        br
+        br
+        a(href='#', id='deactivate', class='btn btn-lg btn-block btn-danger') Deactivate
+
+block javascript
+  script(src="/js/activate.js")

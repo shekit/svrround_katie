@@ -4,6 +4,27 @@ html, body, canvas{
 	background: #000;
 }
 
+/**** WELCOME SCREEN ****/
+#welcome{
+	position: absolute;
+	z-index: 1000;
+	padding: 5%;
+	margin: 5%;
+	width: 50%;
+}
+
+#hashtag{
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	color: white;
+	padding-left: 4px;
+}
+
+.join {
+	display: none;
+}
+
 /**** CHAT *****/
 #chat-wrapper{
 	position: absolute;
@@ -17,6 +38,11 @@ html, body, canvas{
 .shadow {
 	box-shadow: 0 0 5px 2px #333;
 	
+}
+
+.placeholder-text {
+	color: #ddd;
+	font-weight: 300;
 }
 
 #chat-subwrapper {

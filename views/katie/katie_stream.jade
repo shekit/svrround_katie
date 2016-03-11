@@ -4,10 +4,16 @@ block css
   link(rel='stylesheet',href='/css/katie/katie_stream.css')
 
 block content
+  div(class='jumbotron' id='welcome')
+    h1 Hello.
+    p In the first ever 360&deg; live cooking demo, Katie Quinn is going to cook something special for you. Click and drag your mouse to look around and double click to send her some love.
+    p(class='wait')
+      a(class='btn btn-primary btn-lg btn-custom') Stream starts at 12:01 pm (EST)
+    p(class='join')
+      a(class='btn btn-primary btn-lg btn-custom' id='join' role='button') Join
+    h6 Note: Streaming quality is based on your internet connection
 
   div(class='container-fluid')
-    
-
   
     div(id='container')
     div(id='logo')
@@ -23,6 +29,7 @@ block content
           div(id='chat-spacer')
           div(id='chat-box')
             ul(id='chat-message-list', class='list-unstyled')
+            p(class='text-center placeholder-text') No messages yet. Send her one.
           div(id='chat-message')
             div(class='row chat-row')
               form(id='chat-form', class='form-inline' ,autocomplete='off')
@@ -43,4 +50,6 @@ block javascript
   script(src="/js/lib/orbitcontrols.js")
   script(src="/js/lib/hls.min.js")
   script(src="/js/lib/colladaloader.js")
+  script(src="/js/lib/modernizr-custom.js")
+  script(src="/js/lib/Tween.js")
   script(src="/js/katie/katie_stream.js")

@@ -3,8 +3,8 @@ $(document).ready(function(){
 
 	//var socket_url = "http://162.243.95.15:4567"
 	//var route_url = "http://162.243.95.15:3000"
-	var socket_url = "http://localhost:3000"
-	var route_url = "http://localhost:3000"
+	var socket_url = "http://128.122.6.128:3000"
+	var route_url = "http://128.122.6.128:3000"
 
 	var totalViewers = $("#totalViewers");
 	var activeViewers = $("#activeViewers");

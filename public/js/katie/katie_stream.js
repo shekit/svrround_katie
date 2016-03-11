@@ -1,6 +1,6 @@
 $(document).ready(function(){
-	console.log("Stream");
-	var socket_url = "http://localhost:3000"
+	//console.log("Stream");
+	var socket_url = "http://128.122.6.128:3000"
 	var socket = io(socket_url + "/katiestream")
 
 	var form = $("#chat-form");
@@ -10,6 +10,8 @@ $(document).ready(function(){
 	var chatList = $("#chat-message-list")
 	var chatWidget = $("#chat-widget")
 	var toggleChat = $(".toggle-chat");
+
+	var placeholder = $(".placeholder-text");
 
 	var chatVisible = true;
 
@@ -25,7 +27,35 @@ $(document).ready(function(){
 		chatMessage.val("");
 	})
 
+	// check if stream is live or not
+	socket.emit('isActive','ask')
+
+	socket.on('status', function(msg){
+		if(msg == true){
+			//change button to join
+			$(".wait").hide();
+			$(".join").show()
+		}
+	})
+
+	socket.on('activate',function(msg){
+		// activate join button for connected clients
+		$(".wait").hide();
+		$(".join").show();
+	})
+
+	socket.on('deactivate', function(msg){
+		// throw up a message to say stream is over
+		$("#welcome").show();
+		$(".wait").show();
+		$(".join").hide();
+	})
+
 	socket.on('chatMessage', function(msg){
+		if(placeholder.is(":visible")){
+			placeholder.hide();
+		}
+
 		if(msg){
 			var li = "<li>" + msg + "</li>"
 			chatList.prepend(li);
@@ -70,17 +100,26 @@ $(document).ready(function(){
     var video;
 	var sphereQuality = 400;
 
+	if (!Modernizr.webgl) {
+	     alert("Your Browser does not support WebGL, therefore this stream won't run. Try on a different computer, or sign up to get exclusive access to our mobile app beta upon release: www.svrround.com");
+	}
+
+	$("#join").on("click", function(){
+		//console.log("remove jumbotron");
+		$("#welcome").hide();
+	})
+
 	//check if HLS is supported
   if(Hls.isSupported()) {
   	video = document.createElement('video');
-  	console.log("HLS is supported [hls.js] + Video element created " + video)
+  	//console.log("HLS is supported [hls.js] + Video element created " + video)
   	generateVideo(video);
  }
 
 
 // ---------- Video Initialisation ---------
 function generateVideo(){
-	console.log('[1]generate video- video loaded');
+	//console.log('[1]generate video- video loaded');
 	video = document.createElement('video');
 
 		//HLS code ---- svrd server http://wowzaprodhd14-lh.akamaihd.net/i/58762d9c_1@384091/master.m3u8
@@ -88,7 +127,7 @@ function generateVideo(){
     hls.loadSource('http://wowzaprodhd25-lh.akamaihd.net/i/9e329736_1@364238/master.m3u8');
     hls.attachMedia(video);
     hls.on(Hls.Events.MANIFEST_PARSED,function() {
-    	console.log('[HLS] Video playing and generating graphics')
+    	//console.log('[HLS] Video playing and generating graphics')
     	video.play();
  		generateGraphics(video);
 
@@ -100,7 +139,7 @@ function generateVideo(){
 	var texture, material, mesh, controls, camera, dae, loader, mesh, renderer;
 
 	function generateGraphics(video){
-		console.log('[2]generate graphics');		
+		//console.log('[2]generate graphics');		
 
 		//define the scene ---- alpha: true to add transparency with html and css
 		renderer = new THREE.WebGLRenderer({antialias: true, alpha: true});
@@ -117,7 +156,7 @@ function generateVideo(){
 		var aspect = width / height;
 
 		//camera (fov/zoom, aspect)
-		camera = new THREE.PerspectiveCamera( 265, aspect );
+		camera = new THREE.PerspectiveCamera( 250, aspect );
 
 		//this number into the center of the sphere - half of radius of sphere, aka 80 / 2
 		camera.position.x = 0;
@@ -135,7 +174,7 @@ function generateVideo(){
 		scene.add( ambientLight );
 
 				//video texture from video hls feed
-				console.log('hello video texture');
+				//console.log('hello video texture');
 				texture = new THREE.VideoTexture( video );
 				//round texture to nearest sholw number
 				texture.minFilter = THREE.NearestFilter;
@@ -148,9 +187,9 @@ function generateVideo(){
 
 	//--------- Load Collada Model --------
 	loader = new THREE.ColladaLoader();
-		loader.options.convertUpAxis = true;
+
 		loader.options.centerGeometry = true;
-		loader.load( './obj/latestRicoh.dae', function ( collada ) {
+		loader.load( './obj/finalRicoh.dae', function ( collada ) {
 
 			//need to set dae as the collada scene and use that in traverse
 			dae = collada.scene;
@@ -172,7 +211,7 @@ function generateVideo(){
 
 	    } );
 
-			console.log(collada)
+			//console.log(collada)
 			// console.log(collada.dae.geometries['Sphere-mesh'])
 			// collada.dae.geometries['Sphere-mesh'].doubleSided = true;
 
@@ -185,47 +224,71 @@ function generateVideo(){
 		}
 
 
-	//-------- YUM 3D cube part ----------------
-		var geometry = new THREE.BoxGeometry( 3, 1, 1 );
-		var texture2 = new THREE.TextureLoader().load( "./images/yum.png" );
-		// var material2 = new THREE.MeshBasicMaterial( THREE.ImageUtils.loadTexture('yum.png') );
-		var cube = new THREE.Mesh( geometry, texture2 );
+	//--------- Load Collada Model: YUM --------
+		var YUMMY;
+		loaderYUM = new THREE.ColladaLoader();
+			loaderYUM.options.convertUpAxis = true;
+			loaderYUM.options.centerGeometry = true;
+			loaderYUM.load( './obj/yum.dae', function ( colladaYUM ) {
+				//need to set dae as the collada scene and use that in traverse
+				daeYUM = colladaYUM.scene;
+				daeYUM.traverse( function ( child2 ) {
+
+		        if ( child2 instanceof THREE.Mesh ) {
+		        	//need to add the mesh child we just created rather than the actual dae object loaded
+		            // child.material = materialYUM;
+		            YUMMY = child2;
+		        }
+
+		    } );
+		});
 
 		var x, y, z, w, vector;
 
 	//----------- ANIMATE -------------
-		function animate() {
-			texture.needsUpdate = true;
-			requestAnimationFrame( animate );
-			renderer.render( scene, camera );
-			controls.update();
-				
-			x = camera.quaternion.x;
-			y = camera.quaternion.y;
-			z = camera.quaternion.z;
-			w = camera.quaternion.w;
-			//send camera direction variables on every frame 
+	function animate() {
+		texture.needsUpdate = true;
+		requestAnimationFrame( animate );
+		renderer.render( scene, camera );
+		controls.update();
+		camera.updateProjectionMatrix();
+			
+		var vectorL = new THREE.Vector3( 0, 0, - 1 );
+		vectorL.applyQuaternion( camera.quaternion );
 
-			//console.log(x + "x    " + y  + "y    " + z  + "z    " + w  + "w    " )
-		}
+		x = vectorL.x;
+		y = vectorL.y;
+		z = vectorL.z;
+
+		TWEEN.update();
+	}
+
+	requestAnimationFrame( animate );
 
 	//------------ DOUBLE CLICK ---------------
 		$( document ).dblclick(function(event) {
-			//event.preventDefault();
+			event.preventDefault();
 			socket.emit('heartCount','one')
-			console.log("cube")
-			//send x,y,z when "liked" for a direction
-			cube.position.set(x,y,z);
-			scene.add(cube);
-			var myVar = setTimeout(end, 3000);
-	  		// canvas.drawImage( yum, x, y, z );
+			socket.emit('direction', {"x":x,"y":y,"z":z})
+
+			YUMMY.position.set(x*2,y*2,z*2);
+			YUMMY.lookAt(camera.position);
+			var sizze = 0.08;
+			YUMMY.scale.set(-sizze,-sizze,sizze);
+
+			scene.add(YUMMY);
+			new TWEEN.Tween(YUMMY.scale).to( {x:-0.12,y:-0.12,z:0.12}, 2000).easing( TWEEN.Easing.Elastic.Out).start();
+
+			// cube2.position.set(x,y,z);
+			// scene.add( cube2 );
+
+			var myVar = setTimeout(end, 730);
 		});
 
 		function end(){
-			scene.remove(cube);
+			scene.remove( cube2 );
+			scene.remove(YUMMY);
 		};
-
-		requestAnimationFrame( animate );
 
 	}
 
