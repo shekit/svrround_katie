@@ -17,7 +17,7 @@ block content
                   a(href='http://svrround.com/katie-quinn', class='live') Live Stream
         div(class='inner cover')
           h1(class='cover-heading')
-            img(src='/images/logo.png',alt='Svrround', width="400")
+            img(src='/images/logo_black.png',alt='Svrround', width="400")
           p(class='lead') 360&deg; live streams with your favorite artists
           div(class='row')
             div(class='col-md-2 col-lg-3')
@@ -25,18 +25,27 @@ block content
               form(id='signup')
                 input(type='email', placeholder='Your Email', class='text-center form-control input-lg email')
                 br
-                input(type='submit', value='Sign up', class='btn btn-default btn-lg btn-block btn-custom')
+                input(type='submit', value='Stay Updated', class='btn btn-default btn-lg btn-block btn-custom')
               div(class='thanks')
                p(class='lead largep') Thank you!
-               p(class='lead') You'll hear from us soon
+               p(class='lead subtext') You'll hear from us soon
+              br
+              br
+              p(class='get')!= "Have an idea for a stream? <a href='emailto:davidcihelna@gmail.com', class='contact'>Get in touch</a>"
             div(class='col-md-2 col-lg-3')
           p(class='lead')
             
 
         div(class='mastfoot')
           div(class='inner')
-            p
-              a(href='https://www.facebook.com/svrroundvr', target='blank') Facebook
+            ul(class='list-inline list-unstyled')
+              li
+                p
+                  a(href='https://www.facebook.com/svrroundvr', target='blank') Facebook
+              li
+                p
+                  a(href='https://www.twitter.com', target='blank') Twitter
+              
       
 block javascript
   script(src='/js/global.js')

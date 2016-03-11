@@ -6,6 +6,8 @@ $(document).ready(function(){
 
 	var form = $("#signup");
 
+	var thanks = $(".thanks")
+
 	var emailField = $(".email")
 
 	form.on('submit', function(event){

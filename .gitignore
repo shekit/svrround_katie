@@ -1,3 +1,4 @@
 /node_modules
 /data/data.json
 /config/config-dev.js
+/data/emails.json
