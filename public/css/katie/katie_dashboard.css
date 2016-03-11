@@ -19,6 +19,15 @@ body {
 	padding-right:10px;
 }
 
+.country-card {
+	text-align: left;
+}
+
+#location-list li:first-child{
+	color: #f05a28;
+	font-weight: bold;
+}
+
 .navbar {
 	border-radius: 0;
 	min-height: 70px;

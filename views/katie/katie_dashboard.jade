@@ -28,11 +28,8 @@ block content
         h2 Total Viewers
         h4(id='totalViewers') 0
     div(class='row')
-      div(class='col-xs-12 col-md-6 text-center card')
-        h2 Country
-      div(class='col-xs-12 col-md-6 text-center card')
-        h2 City
-  
-      
+      div(class='col-xs-12 col-md-12 text-center card country-card')
+        ul(class='list-inline list-unstyled', id='location-list')
+   
 block javascript
   script(src='/js/katie/katie_dashboard.js')

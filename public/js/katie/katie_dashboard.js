@@ -19,6 +19,8 @@ $(document).ready(function(){
 
 	var sendRecipe = $("#send-recipe")
 
+	var locationList = $("#location-list")
+
 	var socket = io(socket_url+'/katiedashboard');
 
 	socket.on('stats', function(msg){
@@ -39,9 +41,22 @@ $(document).ready(function(){
 
 	socket.on('location', function(msg){
 		if(msg){
-			console.log(msg.city)
-			console.log(msg.region)
-			console.log(msg.country)
+			var location = '';
+
+			if(msg.city){
+				location += msg.city
+			}
+
+			if(msg.region){
+				location += ', '+ msg.region;
+			}	
+
+			if(msg.country){
+				location += ', '+msg.country
+			}
+			location += " |"
+
+			locationList.prepend("<li>"+location+"</li>")
 		}
 	})
 
