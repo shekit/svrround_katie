@@ -30,6 +30,11 @@ block content
                   input(type='text', name='message', id='chat-input-message' placeholder='Send Katie a message', class='form-control')
                 div(class='col-xs-3 no-padding-left')
                   input(type='submit', value='Send', class='form-control btn btn-default btn-custom')
+
+    div(id='info')
+      p!= "Double Click anywhere to show Katie your appreciation&nbsp<span class='glyphicon glyphicon-heart'></span>&nbsp"
+      p(class='dismiss-info') (click to dismiss)
+
                     
 
   

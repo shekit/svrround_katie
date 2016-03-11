@@ -1,6 +1,7 @@
 html, body, canvas{
 	margin: 0;
 	padding: 0;
+	background: #000;
 }
 
 /**** CHAT *****/
@@ -112,7 +113,7 @@ html, body, canvas{
 	border-color:#ccc;
 }
 
-.btn-custom, .btn-custom:active, .btn-custom:visited{
+.btn-custom, .btn-custom:active, .btn-custom:visited, .btn-custom:focus{
 	border-color: #ef4136;
 	background:#ef4136;
 	color: #fff;
@@ -156,4 +157,27 @@ video{
 .input-group-addon {
 	padding: 0;
 	border: none;
+}
+
+#info {
+	position: absolute;
+	width: auto;
+	font-size: 14px;
+	bottom: 10px;
+	left:10px;
+	background: rgba(0,0,0,0.5);
+	padding: 10px;
+	color: #fff;
+	cursor: pointer;
+}
+
+
+#info .glyphicon {
+	color: #ef4136;
+	font-size: 16px;
+}
+
+.dismiss-info {
+	font-style: italic;
+	font-size: 11px;
 }

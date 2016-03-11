@@ -54,6 +54,11 @@ $(document).ready(function(){
 		}
 	})
 
+	$("body").on('click', '#info', function(event){
+		event.preventDefault();
+		$("#info").hide();
+	})
+
 	// get ip address
 	$.getJSON("https://api.ipify.org?format=jsonp&callback=?",
       function(json) {
