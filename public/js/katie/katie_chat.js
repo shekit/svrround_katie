@@ -1,11 +1,12 @@
 $(document).ready(function(){
-	console.log("Chat")
+	console.log("Chat!!")
 	var socket_url = "http://159.203.91.98:3000"
 	var socket = io(socket_url + "/katiechat")
 
 	var placeholder = $(".placeholder-text")
 
 	var messageList = $("#chat-messages")
+
 
 	socket.on('chatMessage', function(msg){
 
@@ -17,4 +18,7 @@ $(document).ready(function(){
 
 		messageList.prepend(li)
 	})
+
+
+
 })

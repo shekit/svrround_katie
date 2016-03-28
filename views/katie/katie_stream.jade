@@ -2,6 +2,7 @@ extends ../layout
 
 block css
   link(rel='stylesheet',href='/css/katie/katie_stream.css')
+  link(rel='stylesheet',href='/css/animate.css')
 
 block content
   div(class='jumbotron' id='welcome')
@@ -31,6 +32,14 @@ block content
             ul(id='chat-message-list', class='list-unstyled')
             p(class='text-center placeholder-text') No messages yet. Send her one.
           div(id='chat-message')
+            img(class='emoji' src='https://abs.twimg.com/emoji/v1/72x72/1f601.png' width='40px' height='40px')
+            img(class='emoji' src='https://abs.twimg.com/emoji/v1/72x72/1f61d.png' width='40px' height='40px')
+            img(class='emoji' src='https://abs.twimg.com/emoji/v1/72x72/1f631.png' width='40px' height='40px')
+            img(class='emoji' src='https://abs.twimg.com/emoji/v1/72x72/1f610.png' width='40px' height='40px')
+            img(class='emoji' src='https://abs.twimg.com/emoji/v1/72x72/1f62d.png' width='40px' height='40px')
+            img(class='emoji' src='https://abs.twimg.com/emoji/v1/72x72/1f60d.png' width='40px' height='40px')
+            img(class='emoji' src='https://abs.twimg.com/emoji/v1/72x72/1f635.png' width='40px' height='40px')
+            
             div(class='row chat-row')
               form(id='chat-form', class='form-inline' ,autocomplete='off')
                 div(class='col-xs-9 no-padding-right')

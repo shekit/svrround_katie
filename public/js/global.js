@@ -1,5 +1,5 @@
-$(document).ready(function(){
-	//console.log("index page");
+$(document).ready(function() {
+	console.log("index page");
 
 	var socket_url = "http://159.203.91.98:3000"
 	var socket = io(socket_url + "/email")
@@ -10,12 +10,12 @@ $(document).ready(function(){
 
 	var emailField = $(".email")
 
-	form.on('submit', function(event){
+	form.on('submit', function(event) {
 		event.preventDefault();
 
 		var message = emailField.val();
 
-		if(message){
+		if (message) {
 			socket.emit('email', message);
 
 			//show thank you
@@ -25,4 +25,5 @@ $(document).ready(function(){
 
 		emailField.val("");
 	})
+
 })

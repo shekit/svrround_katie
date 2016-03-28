@@ -11,15 +11,15 @@ var util = require('util');
 jsonfile.spaces = 4;
 
 
-var nodemailer = require('nodemailer');
-var mandrillTransport = require('nodemailer-mandrill-transport')
-var mandrill = require('./config/config-dev.js')
+// var nodemailer = require('nodemailer');
+// var mandrillTransport = require('nodemailer-mandrill-transport')
+// var mandrill = require('./config/config-dev.js')
 
-var transport = nodemailer.createTransport(mandrillTransport({
-	auth: {
-		apiKey: mandrill.mandrill_api_key
-	}
-}))
+// var transport = nodemailer.createTransport(mandrillTransport({
+// 	auth: {
+// 		apiKey: mandrill.mandrill_api_key
+// 	}
+// }))
 
 
 
