@@ -12,6 +12,18 @@ html, body, canvas{
 	margin: 5%;
 	width: 50%;
 }
+.modal-body{
+	height:200px;
+
+
+}
+
+
+#social-links{
+	bottom:0;
+	position:absolute;
+
+}
 
 #hashtag{
 	position: absolute;
@@ -35,12 +47,29 @@ html, body, canvas{
 	min-width: 300px;
 
 }
-
+/*
 .emoji{
-	margin-top:25px;
-	margin-bottom:10px;
 	margin-left:2px;
+	margin-right:2px;
+	font-size:32px;
+	display:inline;
 }
+
+.emoji:hover{
+	cursor:pointer;
+}
+
+#emoji-container{
+	background-color: rgba(0,0,0,.6);
+	text-align: center;
+	margin-top:65px;
+	padding-bottom:50px;
+	-webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+}*/
 
 .shadow {
 	box-shadow: 0 0 5px 2px #333;
@@ -65,6 +94,16 @@ html, body, canvas{
 	position: absolute;
 	top: 10px;
 	right: 0;
+	z-index:200;
+	font-size: 20px;
+}
+
+#social-toggle {
+	width: 50px;
+	width: 50px;
+	position: absolute;
+	top: 10px;
+	right: 25px;
 	z-index:200;
 	font-size: 20px;
 }
@@ -109,13 +148,14 @@ html, body, canvas{
 	color: #eee;
 }
 
+
 .chat-row {
 	margin-right: 0;
 	margin-left: 35px;
 }
 
 #chat-message {
-	background: rgba(0,0,0,.1);
+	background: rgba(0,0,0,.6);
 	border-top: 1px solid #000;
 	height: 19%;
 	width: 100%;
@@ -205,6 +245,10 @@ video{
 	cursor: pointer;
 }
 
+#more-info {
+	font-size:20px;
+	margin:18px;
+}
 
 #info .glyphicon {
 	color: #ef4136;

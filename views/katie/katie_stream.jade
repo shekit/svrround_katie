@@ -14,15 +14,42 @@ block content
       a(class='btn btn-primary btn-lg btn-custom' id='join' role='button') Join
     h6 Note: Streaming quality is based on your internet connection
 
-  div(class='container-fluid')
+  div(class="modal fade" id="social-modal" role="dialog")
+    div(class="modal-dialog")
+      div(class="modal-content")
   
+        div(class="modal-body")
+          button(type="button" class="close" data-dismiss="modal") &times;
+          p(id= "more-info") Svrround is a social platform for realtime 360 live streaming made for creatives: musicians, bloggers, journalists, theatre and more.
+          
+        div(class="modal-footer")
+          ul(class='list-inline list-unstyled' id="social-links")
+            li
+              p
+                a(href='https://www.facebook.com/svrroundvr', target='blank') Facebook
+            li
+              p
+                a(href='https://www.twitter.com/svrroundvr', target='blank') Twitter
+            li
+              p
+                a(href='mailto:davidcihelna@gmail.com', class='contact', target='blank') Contact Us
+
+          button(type="button" class="btn btn-default" data-dismiss="modal") Close
+
+  div(class='container-fluid')
     div(id='container')
     div(id='logo')
       a(href='http://svrround.com')
         img(src='/images/logo.png', id='logo-img')
 
+
+
+
     div(id='chat-wrapper', class='shadow')
       div(id='chat-subwrapper')
+        div(id='social-toggle')
+          a(href="#", class='toggle-social')
+            span(class='glyphicon glyphicon-flag' data-toggle="modal" data-target="#social-modal")
         div(id='chat-toggle')
           a(href="#", class='toggle-chat')
             span(class='glyphicon glyphicon-remove')
@@ -32,18 +59,10 @@ block content
             ul(id='chat-message-list', class='list-unstyled')
             p(class='text-center placeholder-text') No messages yet. Send her one.
           div(id='chat-message')
-            img(class='emoji' src='https://abs.twimg.com/emoji/v1/72x72/1f601.png' width='40px' height='40px')
-            img(class='emoji' src='https://abs.twimg.com/emoji/v1/72x72/1f61d.png' width='40px' height='40px')
-            img(class='emoji' src='https://abs.twimg.com/emoji/v1/72x72/1f631.png' width='40px' height='40px')
-            img(class='emoji' src='https://abs.twimg.com/emoji/v1/72x72/1f610.png' width='40px' height='40px')
-            img(class='emoji' src='https://abs.twimg.com/emoji/v1/72x72/1f62d.png' width='40px' height='40px')
-            img(class='emoji' src='https://abs.twimg.com/emoji/v1/72x72/1f60d.png' width='40px' height='40px')
-            img(class='emoji' src='https://abs.twimg.com/emoji/v1/72x72/1f635.png' width='40px' height='40px')
-            
             div(class='row chat-row')
               form(id='chat-form', class='form-inline' ,autocomplete='off')
                 div(class='col-xs-9 no-padding-right')
-                  input(type='text', name='message', id='chat-input-message' placeholder='Send Katie a message', class='form-control')
+                  input(type='text', name='message', id='chat-input-message', data-emojiable="true", placeholder='Send a message', class='form-control')
                 div(class='col-xs-3 no-padding-left')
                   input(type='submit', value='Send', class='form-control btn btn-default btn-custom')
 

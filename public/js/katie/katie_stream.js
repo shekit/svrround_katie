@@ -3,19 +3,29 @@ $(document).ready(function() {
 	var latestEmoji = 'https://abs.twimg.com/emoji/v1/72x72/1f601.png';
 
 	$('.emoji').click(function(e) {
-			latestEmoji = this.src;
-		})
+		console.log(this)
+		latestEmoji = this.src;
+		var prevVal = $('#chat-input-message').val()
+		$('#chat-input-message').val(prevVal + this.innerHTML)
+		$('#chat-input-message').val();
+		$('#chat-input-message')[0].focus();
+	})
 
-		$('body').mousedown(function()
-	{
-	   $(this).css('cursor', 'move');
-	});
-	$('body').mouseup(function()
-	{ 
-	   $(this).css('cursor', 'pointer');
-	});
-
-		//console.log("Stream");
+	$('#chat-input-message').emojiPicker({
+  height: '300px',
+  width:  '450px',
+  iconBackgroundColor:'white'
+});
+	// $('body').mousedown(function() {
+	// 	$(this).css('cursor', 'move');
+	// });
+	// $('body').mouseup(function() {
+	// 	$(this).css('cursor', 'pointer');
+	// });
+	
+	// $('#welcome').hide()
+	//console.log("Stream");
+	
 	var socket_url = "http://159.203.91.98:3000"
 	var socket = io(socket_url + "/katiestream")
 
@@ -33,6 +43,7 @@ $(document).ready(function() {
 
 	form.on('submit', function(event) {
 		event.preventDefault();
+		$('.emojiPicker').hide();
 
 		var message = chatMessage.val();
 
@@ -294,43 +305,49 @@ $(document).ready(function() {
 				"z": z
 			});
 
-		
+			// var emoji = document.createElement('img');
 
-			var emoji = document.createElement('img');
+			// //NOT programmatic...
+			// var imgWidth = 100;
 
-			$(emoji).attr('src', latestEmoji);
-			$(emoji).css({
-				 'left': event.clientX - 36 + 'px',
-					'top': event.clientY - 36 + 'px',			
-					'z-index': '123456',
-					'position': 'fixed',
-					'display':'inline'
-				});
+			// $(emoji).attr('src', 'http://i.imgur.com/ggm8O9Z.png');
+			// $(emoji).css({
+			// 	'left': event.clientX - imgWidth/2 + 'px',
+			// 	'top': event.clientY - imgWidth/2 + 'px',
+			// 	'width' : '100px',
+			// 	'height' : '100px',
+			// 	'z-index': '123456',
+			// 	'position': 'fixed',
+			// 	'display': 'inline'
+			// });
 
-				console.log(emoji.clientWidth/2,emoji.clientHeight/2)
+			// console.log(emoji.clientWidth / 2, emoji.clientHeight / 2)
+
+			// $('body').append(emoji)
+			// $(emoji).addClass('animated rubberBand')
+
+			// emoji.addEventListener('animationend', function(){
+			// 	$(emoji).remove()
+			// }, true);
+
+			// console.log(emoji)
 
 
-			$('body').append(emoji)
-			$(emoji).addClass('animated bounceOutUp')
-			console.log(emoji)
+			YUMMY.position.set(x * 2, y * 2, z * 2);
+			YUMMY.lookAt(camera.position);
+			var sizze = 0.08;
+			YUMMY.scale.set(-sizze, -sizze, sizze);
+			scene.add(YUMMY);
+			new TWEEN.Tween(YUMMY.scale).to({
+				x: -0.12,
+				y: -0.12,
+				z: 0.12
+			}, 2000).easing(TWEEN.Easing.Elastic.Out).start();
 
+			// cube2.position.set(x,y,z);
+			// scene.add( cube2 );
 
-			// YUMMY.position.set(x * 2, y * 2, z * 2);
-			// YUMMY.lookAt(camera.position);
-			// var sizze = 0.08;
-			// YUMMY.scale.set(-sizze, -sizze, sizze);
-
-			// scene.add(YUMMY);
-			// new TWEEN.Tween(YUMMY.scale).to({
-			// 	x: -0.12,
-			// 	y: -0.12,
-			// 	z: 0.12
-			// }, 2000).easing(TWEEN.Easing.Elastic.Out).start();
-
-			// // cube2.position.set(x,y,z);
-			// // scene.add( cube2 );
-
-			// var myVar = setTimeout(end, 730);
+			var myVar = setTimeout(end, 730);
 		});
 
 		function end() {
