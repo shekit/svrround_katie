@@ -194,7 +194,9 @@ $(document).ready(function() {
 		console.log('[1]generate video- video loaded');
 		video = document.createElement('video');
 
-		// 	//HLS code ---- svrd server 
+		// 	//HLS code -
+		// 	demo --- http://qthttp.apple.com.edgesuite.net/1010qwoeiuryfg/sl.m3u8
+		// 	svrd server http://wowzaprodhd14-lh.akamaihd.net/i/58762d9c_1@384091/master.m3u8
 		var hls = new Hls();
 		hls.loadSource('http://wowzaprodhd14-lh.akamaihd.net/i/58762d9c_1@384091/master.m3u8');
 		hls.attachMedia(video);
