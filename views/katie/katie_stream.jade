@@ -7,9 +7,9 @@ block css
 block content
   div(class='jumbotron' id='welcome')
     h1 Hello.
-    p In the first ever 360&deg; live cooking demo, Katie Quinn is going to cook something special for you. Click and drag your mouse to look around and double click to send her some love.
+    p Welcome to the home of the first ever social 360° live streaming experiences.
     p(class='wait')
-      a(class='btn btn-primary btn-lg btn-custom') Stream starts at 12:01 pm (EST)
+      a(class='btn btn-primary btn-lg btn-custom') Next stream starts at 8:00 pm (EST)
     p(class='join')
       a(class='btn btn-primary btn-lg btn-custom' id='join' role='button') Join
     h6 Note: Streaming quality is based on your internet connection
@@ -17,23 +17,25 @@ block content
   div(class="modal fade" id="social-modal" role="dialog")
     div(class="modal-dialog")
       div(class="modal-content")
-  
+        div(class="modal-header")
+          button(type="button" class="close" data-dismiss="modal" aria-label="Close")
+            span(aria-hidden="true") &times;
+
         div(class="modal-body")
-          button(type="button" class="close" data-dismiss="modal") &times;
-          p(id= "more-info") Svrround is a social platform for realtime 360 live streaming made for creatives: musicians, bloggers, journalists, theatre and more.
+          p(id= "more-info") Svrround is a social platform for 360 live streaming made for creatives: musicians, bloggers, journalists, theatre and more.
+          p(id="social-container")
+            ul(class='list-inline list-unstyled text-center' id="social-links")
+              li
+                p
+                  a(href='https://www.facebook.com/svrroundvr', target='blank') Facebook
+              li
+                p
+                  a(href='https://www.twitter.com/svrroundvr', target='blank') Twitter
+              li
+                p
+                  a(href='mailto:davidcihelna@gmail.com', class='contact', target='blank') Stream with us
           
         div(class="modal-footer")
-          ul(class='list-inline list-unstyled' id="social-links")
-            li
-              p
-                a(href='https://www.facebook.com/svrroundvr', target='blank') Facebook
-            li
-              p
-                a(href='https://www.twitter.com/svrroundvr', target='blank') Twitter
-            li
-              p
-                a(href='mailto:davidcihelna@gmail.com', class='contact', target='blank') Contact Us
-
           button(type="button" class="btn btn-default" data-dismiss="modal") Close
 
   div(class='container-fluid')
@@ -42,14 +44,15 @@ block content
       a(href='http://svrround.com')
         img(src='/images/logo.png', id='logo-img')
 
-
-
-
     div(id='chat-wrapper', class='shadow')
       div(id='chat-subwrapper')
+        
+        div(id='invite-toggle')
+          a(href='#', class='toggle-invite', data-toggle='popover', title='Invite a friend on Twitter', data-placement='bottom', data-content="<form id='invite-form' class='invite-form' autocomplete='off'><input type='text' placeholder='@from' class='input-sm invite-input' id='from-user'><input type='text' placeholder='@to' class='input-sm invite-input' id='to-user'><input type='submit' value='Invite' class='btn btn-default btn-custom' id='send-tweet'></form>")
+            span(class='glyphicon glyphicon-send')
         div(id='social-toggle')
           a(href="#", class='toggle-social')
-            span(class='glyphicon glyphicon-flag' data-toggle="modal" data-target="#social-modal")
+            span(class='glyphicon glyphicon-question-sign' data-toggle='modal' data-target='#social-modal')
         div(id='chat-toggle')
           a(href="#", class='toggle-chat')
             span(class='glyphicon glyphicon-remove')
@@ -57,7 +60,7 @@ block content
           div(id='chat-spacer')
           div(id='chat-box')
             ul(id='chat-message-list', class='list-unstyled')
-            p(class='text-center placeholder-text') No messages yet. Send her one.
+            p(class='text-center placeholder-text') Chat with fellow viewers.
           div(id='chat-message')
             div(class='row chat-row')
               form(id='chat-form', class='form-inline' ,autocomplete='off')
@@ -67,7 +70,7 @@ block content
                   input(type='submit', value='Send', class='form-control btn btn-default btn-custom')
 
     div(id='info')
-      p!= "Double Click anywhere to show Katie your &nbsp<span class='glyphicon glyphicon-heart'></span>&nbsp"
+      p!= "Double Click anywhere to show Saba your &nbsp<span class='glyphicon glyphicon-heart'></span>&nbsp"
       p(class='dismiss-info') (click to dismiss)
 
                     

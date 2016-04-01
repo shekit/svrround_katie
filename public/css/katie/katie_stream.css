@@ -13,17 +13,27 @@ html, body, canvas{
 	width: 50%;
 }
 .modal-body{
-	height:200px;
-
-
+	height:140px;
 }
 
 
-#social-links{
+/*.modal-header {
+	font-size:16px;
+	height: 150px;
+}
+*/
+
+/*#social-links{
 	bottom:0;
+	left:50%;
+	padding-top:15px;
 	position:absolute;
+}*/
+/*
+#social-container{
+	left:100px;
 
-}
+}*/
 
 #hashtag{
 	position: absolute;
@@ -47,29 +57,28 @@ html, body, canvas{
 	min-width: 300px;
 
 }
-/*
-.emoji{
-	margin-left:2px;
-	margin-right:2px;
-	font-size:32px;
-	display:inline;
+
+.emoji-icon-con {
+    display: inline-table;
+    width: 25%;
+    height: 100%;
+    position: relative;
 }
 
-.emoji:hover{
-	cursor:pointer;
+
+
+.emoji-icon {
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
 }
 
-#emoji-container{
-	background-color: rgba(0,0,0,.6);
-	text-align: center;
-	margin-top:65px;
-	padding-bottom:50px;
-	-webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    -o-user-select: none;
-    user-select: none;
-}*/
+#emoji-box{
+	background-color: rgba(50,50,50,.6);
+	z-index:123;
+}
 
 .shadow {
 	box-shadow: 0 0 5px 2px #333;
@@ -85,7 +94,6 @@ html, body, canvas{
 	position: relative;
 	height: 100%;
 	min-width: 100%;
-
 }
 
 #chat-toggle {
@@ -108,6 +116,20 @@ html, body, canvas{
 	font-size: 20px;
 }
 
+.invite-input{
+	margin-right:3px;
+}
+
+#invite-toggle {
+	width: 50px;
+	width: 50px;
+	position: absolute;
+	top: 10px;
+	right: 55px;
+	z-index:200;
+	font-size: 20px;
+}
+
 .toggle-chat, .toggle-chat:link, .toggle-chat:visited, .toggle-chat:active {
 	color: #ef4136;
 }
@@ -115,6 +137,10 @@ html, body, canvas{
 .toggle-chat:hover {
 	color: #bf342b;
 	text-decoration: none;
+}
+
+.popover{
+	min-width:400px;
 }
 
 #chat-widget{
@@ -193,6 +219,18 @@ html, body, canvas{
 	color: #fff;
 }
 
+.btn-custom2, .btn-custom2:active, .btn-custom2:visited, .btn-custom2:focus{
+	border-color: #ef4136;
+	background:#2196f3;
+	color: #fff;
+}
+
+.btn-custom2:hover {
+	border-color: #bf342b;
+	background:#1286e5;
+	color: #fff;
+}
+
 .btn-custom:hover {
 	border-color: #bf342b;
 	background:#bf342b;
@@ -246,14 +284,16 @@ video{
 }
 
 #more-info {
-	font-size:20px;
+	font-size:18px;
 	margin:18px;
 }
 
-#info .glyphicon {
+
+.glyphicon {
 	color: #ef4136;
 	font-size: 16px;
 }
+
 
 .dismiss-info {
 	font-style: italic;
