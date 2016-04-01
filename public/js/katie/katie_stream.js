@@ -22,7 +22,7 @@ $(document).ready(function() {
 	//$('#welcome').hide()
 		//console.log("Stream");
 
-	var socket_url = "http://159.203.91.98:3000"
+	var socket_url = "http://159.203.91.98:80"
 	var socket = io(socket_url + "/katiestream")
 
 	var form = $("#chat-form");
@@ -126,6 +126,11 @@ $(document).ready(function() {
 		event.preventDefault();
 		$("#info").hide();
 	})
+
+
+	// $("body").on('click', function(event) {
+	// 	if ($('.').is(":visible"); 
+	// })
 
 	// get ip address
 	$.getJSON("https://api.ipify.org?format=jsonp&callback=?",
