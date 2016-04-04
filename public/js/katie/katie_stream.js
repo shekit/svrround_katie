@@ -17,13 +17,17 @@ $(document).ready(function() {
 	});
 
 	$('#container').on('mousedown', function() {
-		$(this).css('cursor', 'move');
-		if (features.banner && features.banner.visible && mouseX < windowWidth/2 + 100 && mouseX > windowWidth/2 - 100  && mouseY < windowHeight/2 + 100 && mouseY > windowHeight/2 - 100) window.open('http://soundcloud.com/sabajenga','_blank')
+		if (features.banner.visible && mouseIsCenter()) window.open('http://soundcloud.com/sabajenga','_blank')
 	});
 
-	$('#container').on('mouseup', function() {
-		$(this).css('cursor', 'pointer');
+	$('#container').on('mousemove', function() {
+		//if (mouseIsCenter() && features.banner.visible) $('#container').css('cursor','pointer')
+		// else $('#container').css('cursor','grab')
 		});
+
+	function mouseIsCenter(){
+		return mouseX < windowWidth/2 + 100 && mouseX > windowWidth/2 - 100  && mouseY < windowHeight/2 + 100 && mouseY > windowHeight/2 - 100
+	}
 
 
 
@@ -423,8 +427,6 @@ $(document).ready(function() {
 			mX = camera.quaternion._x
 			mY = camera.quaternion._y
 			mZ = camera.quaternion._z
-
-			console.log(mX,mY,mZ)
 
 			if (mY > -0.4 && mY < .9 && mZ > -2 && mZ < -.3) {
 
