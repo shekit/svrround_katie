@@ -181,7 +181,6 @@ html, body, canvas{
 }
 
 #chat-message {
-	background: rgba(0,0,0,.6);
 	border-top: 1px solid #000;
 	height: 19%;
 	width: 100%;

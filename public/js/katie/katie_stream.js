@@ -1,8 +1,5 @@
 $(document).ready(function() {
 
-	window.latestEmoji = 'images/grinning.png';
-
-
 	$('[data-toggle="popover"]').popover({
 		html: true
 	});
@@ -12,17 +9,29 @@ $(document).ready(function() {
 		width: '450px',
 		iconBackgroundColor: 'white'
 	});
-	// $('body').mousedown(function() {
-	// 	$(this).css('cursor', 'move');
-	// });
-	// $('body').mouseup(function() {
-	// 	$(this).css('cursor', 'pointer');
-	// });
 
-	//$('#welcome').hide()
+	$('#container, #chat-widget').mousedown(function() {
+		if ($('.popover').is(":visible")) $('.popover').hide();
+		if ($('.emojiPicker').is(":visible")) $('.emojiPicker').hide();
+
+	});
+
+	$('#container').on('mousedown', function() {
+		$(this).css('cursor', 'move');
+		if (features.banner && features.banner.visible && mouseX < windowWidth/2 + 100 && mouseX > windowWidth/2 - 100  && mouseY < windowHeight/2 + 100 && mouseY > windowHeight/2 - 100) window.open('http://soundcloud.com/sabajenga','_blank')
+	});
+
+	$('#container').on('mouseup', function() {
+		$(this).css('cursor', 'pointer');
+		});
+
+
+
+	$('#welcome').hide()
 		//console.log("Stream");
 
-	var socket_url = "http://159.203.91.98:80"
+	//http://159.203.91.98:80
+	var socket_url = "http://localhost:3000"
 	var socket = io(socket_url + "/katiestream")
 
 	var form = $("#chat-form");
@@ -128,10 +137,6 @@ $(document).ready(function() {
 	})
 
 
-	// $("body").on('click', function(event) {
-	// 	if ($('.').is(":visible"); 
-	// })
-
 	// get ip address
 	$.getJSON("https://api.ipify.org?format=jsonp&callback=?",
 		function(json) {
@@ -203,7 +208,7 @@ $(document).ready(function() {
 		// 	demo --- http://qthttp.apple.com.edgesuite.net/1010qwoeiuryfg/sl.m3u8
 		// 	svrd server http://wowzaprodhd14-lh.akamaihd.net/i/58762d9c_1@384091/master.m3u8
 		var hls = new Hls();
-		hls.loadSource('http://wowzaprodhd14-lh.akamaihd.net/i/58762d9c_1@384091/master.m3u8');
+		hls.loadSource('http://qthttp.apple.com.edgesuite.net/1010qwoeiuryfg/sl.m3u8');
 		hls.attachMedia(video);
 		hls.on(Hls.Events.MANIFEST_PARSED, function() {
 			console.log('[HLS] Video playing and generating graphics')
@@ -382,6 +387,26 @@ $(document).ready(function() {
 		});
 		var cube2 = new THREE.Mesh(geometry2, material2);
 
+		
+
+		function addBanner() {
+
+		
+
+			var geometry = new THREE.BoxGeometry(4, 4, 4);
+
+			var material = new THREE.MeshPhongMaterial( { map: THREE.ImageUtils.loadTexture('images/sc.png'),  overdraw: 0.5 } );
+
+			features.banner = new THREE.Mesh(geometry, material);
+
+
+			scene.add(features.banner);
+
+			features.banner.visible = false;
+		}
+
+		addBanner()
+
 
 
 		//-------- YUM 3D cube part ----------------
@@ -394,34 +419,37 @@ $(document).ready(function() {
 
 		//----------- ANIMATE -------------
 		function animate() {
-			texture.needsUpdate = true;
-			requestAnimationFrame(animate);
-			renderer.render(scene, camera);
-			controls.update();
-			camera.updateProjectionMatrix();
 
-			vectorL = new THREE.Vector3(0, 0, -1);
+			mX = camera.quaternion._x
+			mY = camera.quaternion._y
+			mZ = camera.quaternion._z
+
+			var vectorL = new THREE.Vector3(0, 0, -1);
 			vectorL.applyQuaternion(camera.quaternion);
 
 			x = vectorL.x;
 			y = vectorL.y;
 			z = vectorL.z;
 
-			//console.log(vectorL);
-			//
-			
-			mX = camera.quaternion._x
-			mY = camera.quaternion._y
-			mZ = camera.quaternion._z
+			console.log(x,y,z)
 
-			// {_yx: 4.3297783052200656e-17, _y: 0.7071071347398489, _z: -0.7071064276334229, _w: 4.3297826349983774e-17}
-			// 
-			
-			// -0.011464996347162866 0.7070141842464389 -0.7070134772329736
-			if (mY > 0.4 && mY < .9 && mZ > -1 && mZ < -.3){
-				showBanner = true;
+			if (mX > -.3 && mX < .6 && mY > -0.5 && mY < .9 && mZ > -2 && mZ <.5) {
+
+				features.banner.visible = true;
+				console.log('show banner')
+				
+			} else {
+
+				features.banner.visible = false;
 			}
-		// x 5.556450087193521e-8    y 1.000000004536884    z 9.984546019620785e-7
+
+			texture.needsUpdate = true;
+			requestAnimationFrame(animate);
+			renderer.render(scene, camera);
+			controls.update();
+			camera.updateProjectionMatrix();
+
+			
 
 			TWEEN.update();
 		}
@@ -443,7 +471,7 @@ $(document).ready(function() {
 
 
 			YUMMY.position.set(x * 2, y * 2, z * 2);
-			YUMMY.rotateOnAxis('y',90)
+			YUMMY.rotateOnAxis('y', 90)
 			YUMMY.lookAt(camera.position);
 			var sizze = 0.08;
 			YUMMY.scale.set(-sizze, -sizze, sizze);
@@ -476,62 +504,79 @@ $(document).ready(function() {
 
 //------ Emoji Dashboard ---- //
 
-var emojiDash;
-var emojis = {};
+var features = {};
+
 
 function windowResized() {
-	if (emojiDash) emojiDash.center().position(AUTO, windowHeight - emojiDash.size().height);
+	if (features.emojiDash) features.emojiDash.emojiContainer.center().position(AUTO, windowHeight - features.emojiDash.emojiContainer.size().height);
 }
 
 function setup() {
 
 	noCanvas();
-	//buildEmojiDash();
+	//features.emojiDash = new emojiDash();
 
 }
 
+function emojiDash(){
 
-function buildEmojiDash() {
-
-	emojiDash = createDiv('').id('emoji-box').size(300, 100).center();
-	emojiDash.position(AUTO, windowHeight - emojiDash.size().height);
-
-	emojis.grinning = createImg('images/grinning.png', prepareEmoji);
-	emojis.crying = createImg('images/crying.png', prepareEmoji);
-	emojis.hearteyes = createImg('images/hearteyes.png', prepareEmoji);
-	emojis.astonished = createImg('images/astonished.png', prepareEmoji);
+	this.on = true;
+	this.emojis = {};
+	this.latestEmoji = 'images/grinning.png';
+	this.emojiContainer = null;
+	this.build();
 
 }
 
+emojiDash.prototype.build = function() {
 
-function prepareEmoji() {
+	var parent = this;
+
+	this.prepareEmoji = function() {
+
+		var self = this;
+
+		this.popularity = .5;
+		this.w = this.size().width;
+		this.h = this.size().height;
+
+		this.timer = setInterval(function() {
+			if (self.popularity > .5) self.popularity -= .005;
+			self.size(self.w * self.popularity, self.h * self.popularity).center();
+		}, 250)
+
+		console.log('THIS*** PREPARE', this, 'self', self)
+
+		this.addClass('emoji-icon');
+		this.parent(createDiv('').addClass('emoji-icon-con').parent(parent.emojiContainer)).size(this.w * this.popularity, this.h * this.popularity).center()
+			.mouseOver(function() {
+				this.style('cursor:pointer')
+			})
+			.mousePressed(function() {
+				console.log('SRC', this.elt.src)
+				self.latestEmoji = this.elt.src;
+				if (this.popularity < 1) this.popularity += .02;
+				this.size(this.w * this.popularity, this.h * this.popularity).center();
+			});
+	}
 
 	var self = this;
 
-	this.popularity = .5;
-	this.w = this.size().width;
-	this.h = this.size().height;
+	this.emojiContainer = createDiv('').id('emoji-box').size(300, 100).center();
+	this.emojiContainer.position(AUTO, windowHeight - self.emojiContainer.size().height);
+	this.emojis.grinning = createImg('images/grinning.png', self.prepareEmoji);
+	this.emojis.crying = createImg('images/crying.png', self.prepareEmoji);
+	this.emojis.hearteyes = createImg('images/hearteyes.png', self.prepareEmoji);
+	this.emojis.astonished = createImg('images/astonished.png', self.prepareEmoji);
 
-	this.timer = setInterval(function() {
-		if (self.popularity > .5) self.popularity -= .005;
-		self.size(self.w * self.popularity, self.h * self.popularity).center();
-	}, 250)
-
-	this.addClass('emoji-icon');
-	this.parent(createDiv('').addClass('emoji-icon-con').parent(emojiDash)).size(this.w * this.popularity, this.h * this.popularity).center()
-		.mouseOver(function() {
-			this.style('cursor:pointer')
-		})
-		.mousePressed(function() {
-			console.log('SRC', this.elt.src)
-			window.latestEmoji = this.elt.src;
-			if (this.popularity < 1) this.popularity += .02;
-			this.size(this.w * this.popularity, this.h * this.popularity).center();
-		});
 }
 
-function fireEmoji() {
-	var emojiBg = createImg(window.latestEmoji)
+
+emojiDash.prototype.fireEmoji = function() {
+
+	var self = this;
+
+	var emojiBg = createImg(self.latestEmoji)
 
 	emojiBg.position(random(150, windowWidth - 200), windowHeight - random(100, 400))
 	emojiBg.addClass('animated-fast rubberBand')

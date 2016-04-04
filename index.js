@@ -6,7 +6,7 @@ var bodyParser = require('body-parser');
 var cors = require('cors');
 var twit = require('twit');
 
-var config = require('./config/config.js')
+var config = require('./config/config-dev.js')
 
 var T = new twit(config);
 
@@ -156,6 +156,28 @@ var viewerStats = {};
 
 // io for live stream page
 katiestreamio.on('connection', function(socket) {
+
+	socket.on('tweet', function(data) {
+
+		console.log('got tweet', data)
+
+		var fromUser = data.fromUser;
+		var toUser = data.toUser;
+
+		if (fromUser[0] === '@') fromUser = toUser.substring(1, fromUser.length)
+		if (toUser[0] === '@') toUser = toUser.substring(1, toUser.length)
+
+		console.log('tweet from ', fromUser, ' to ', toUser);
+
+		T.post('statuses/update', {
+			status: '@' + fromUser +' come watch this live 360 stream with me,  @' +  fromUser + '! http://svrround.com/live'
+		}, function(data) {
+			console.log('tweeted successfuly');
+
+		});
+
+	})
+
 	console.log("New viewer for katie")
 
 	viewerStats[socket.id] = {
@@ -188,25 +210,6 @@ katiestreamio.on('connection', function(socket) {
 		console.log(viewerStats[socket.id]["messages"])
 		katiechatio.emit("chatMessage", data);
 		katiestreamio.emit("chatMessage", data);
-	})
-
-	socket.on('tweet', function(data) {
-
-		var fromUser = data.fromUser;
-		var toUser = data.toUser;
-
-		if (fromUser[0] === '@') fromUser = toUser.substring(1, fromUser.length)
-		if (toUser[0] === '@') toUser = toUser.substring(1, toUser.length)
-
-		console.log('tweet from ', fromUser, ' to ', toUser);
-
-		T.post('statuses/update', {
-			status: '@' + fromUser + ' wants to watch this live 360 stream with you @' + toUser + '! http://svrround.com/live'
-		}, function(data) {
-			console.log('tweeted successfuly');
-
-		});
-
 	})
 
 	socket.on('ip', function(data) {
@@ -482,6 +485,6 @@ function totalHeartCount() {
 	return totalHearts;
 }
 
-http.listen(80, function() {
+http.listen(3000, function() {
 	console.log("listening");
 })
