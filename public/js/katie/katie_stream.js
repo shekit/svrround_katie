@@ -424,18 +424,11 @@ $(document).ready(function() {
 			mY = camera.quaternion._y
 			mZ = camera.quaternion._z
 
-			var vectorL = new THREE.Vector3(0, 0, -1);
-			vectorL.applyQuaternion(camera.quaternion);
+			console.log(mX,mY,mZ)
 
-			x = vectorL.x;
-			y = vectorL.y;
-			z = vectorL.z;
-
-			console.log(x,y,z)
-
-			if (mX > -.3 && mX < .6 && mY > -0.5 && mY < .9 && mZ > -2 && mZ <.5) {
-
+			if (mY > 0.1 && mY < .9 && mZ > -1 && mZ < -.3) {
 				features.banner.visible = true;
+
 				console.log('show banner')
 				
 			} else {
@@ -449,7 +442,12 @@ $(document).ready(function() {
 			controls.update();
 			camera.updateProjectionMatrix();
 
-			
+			vectorL = new THREE.Vector3(0, 0, -1);
+			vectorL.applyQuaternion(camera.quaternion);
+
+			x = vectorL.x;
+			y = vectorL.y;
+			z = vectorL.z;
 
 			TWEEN.update();
 		}
