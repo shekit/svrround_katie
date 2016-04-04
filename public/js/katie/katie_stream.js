@@ -426,9 +426,9 @@ $(document).ready(function() {
 
 			console.log(mX,mY,mZ)
 
-			if (mY > 0.1 && mY < .9 && mZ > -1 && mZ < -.3) {
-				features.banner.visible = true;
+			if (mY > -0.4 && mY < .9 && mZ > -2 && mZ < -.3) {
 
+				features.banner.visible = true;
 				console.log('show banner')
 				
 			} else {
