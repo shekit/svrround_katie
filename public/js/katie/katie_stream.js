@@ -431,7 +431,6 @@ $(document).ready(function() {
 			if (mY > -0.4 && mY < .9 && mZ > -2 && mZ < -.3) {
 
 				features.banner.visible = true;
-				console.log('show banner')
 				
 			} else {
 
@@ -445,6 +444,7 @@ $(document).ready(function() {
 			camera.updateProjectionMatrix();
 
 			vectorL = new THREE.Vector3(0, 0, -1);
+
 			vectorL.applyQuaternion(camera.quaternion);
 
 			x = vectorL.x;
@@ -452,6 +452,13 @@ $(document).ready(function() {
 			z = vectorL.z;
 
 			TWEEN.update();
+
+			if (YUMMY){
+				YUMMY.lookAt(camera.position);
+				YUMMY.rotation.y = 90;
+			}
+			
+
 		}
 
 		requestAnimationFrame(animate);
@@ -471,8 +478,8 @@ $(document).ready(function() {
 
 
 			YUMMY.position.set(x * 2, y * 2, z * 2);
-			YUMMY.rotateOnAxis('y', 90)
 			YUMMY.lookAt(camera.position);
+			YUMMY.rotation.y = 90;
 			var sizze = 0.08;
 			YUMMY.scale.set(-sizze, -sizze, sizze);
 
@@ -514,6 +521,8 @@ function windowResized() {
 function setup() {
 
 	noCanvas();
+
+	//listen to sockets to get features request
 	//features.emojiDash = new emojiDash();
 
 }
@@ -544,8 +553,6 @@ emojiDash.prototype.build = function() {
 			if (self.popularity > .5) self.popularity -= .005;
 			self.size(self.w * self.popularity, self.h * self.popularity).center();
 		}, 250)
-
-		console.log('THIS*** PREPARE', this, 'self', self)
 
 		this.addClass('emoji-icon');
 		this.parent(createDiv('').addClass('emoji-icon-con').parent(parent.emojiContainer)).size(this.w * this.popularity, this.h * this.popularity).center()
