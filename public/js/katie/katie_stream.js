@@ -29,13 +29,10 @@ $(document).ready(function() {
 		return mouseX < windowWidth / 2 + 100 && mouseX > windowWidth / 2 - 100 && mouseY < windowHeight / 2 + 100 && mouseY > windowHeight / 2 - 100
 	}
 
+	console.log("Stream");
 
-
-	$('#welcome').hide()
-		//console.log("Stream");
-
-	//http://159.203.91.98:80
-	var socket_url = "http://localhost:3000"
+	//var socket_url = "http://159.203.91.98:80"
+	//var socket_url = "http://localhost:3000"
 	window.socket = io(socket_url + "/katiestream")
 
 	var form = $("#chat-form");

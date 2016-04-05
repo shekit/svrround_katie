@@ -1,7 +1,8 @@
 $(document).ready(function() {
 	console.log("index page");
 
-	var socket_url = "http://localhost:3000"
+	//var socket_url = "http://localhost:3000"
+	var socket_url = "http://159.203.91.98:80"
 	var socket = io(socket_url + "/email")
 
 	var form = $("#signup");
