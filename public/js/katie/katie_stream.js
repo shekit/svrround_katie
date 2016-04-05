@@ -17,7 +17,7 @@ $(document).ready(function() {
 	});
 
 	$('#container').on('mousedown', function() {
-		if (features.banner.visible && mouseIsCenter()) window.open('http://soundcloud.com/memba', '_blank')
+		if (features.banner.visible && mouseIsCenter()) window.open('https://soundcloud.com/duendita', '_blank')
 	});
 
 	$('#container').on('mousemove', function() {
