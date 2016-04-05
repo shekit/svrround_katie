@@ -17,16 +17,16 @@ $(document).ready(function() {
 	});
 
 	$('#container').on('mousedown', function() {
-		if (features.banner.visible && mouseIsCenter()) window.open('http://soundcloud.com/sabajenga','_blank')
+		if (features.banner.visible && mouseIsCenter()) window.open('http://soundcloud.com/memba', '_blank')
 	});
 
 	$('#container').on('mousemove', function() {
-		//if (mouseIsCenter() && features.banner.visible) $('#container').css('cursor','pointer')
+		// if (mouseIsCenter() && features.banner.visible) $('#container').css('cursor','pointer')
 		// else $('#container').css('cursor','grab')
-		});
+	});
 
-	function mouseIsCenter(){
-		return mouseX < windowWidth/2 + 100 && mouseX > windowWidth/2 - 100  && mouseY < windowHeight/2 + 100 && mouseY > windowHeight/2 - 100
+	function mouseIsCenter() {
+		return mouseX < windowWidth / 2 + 100 && mouseX > windowWidth / 2 - 100 && mouseY < windowHeight / 2 + 100 && mouseY > windowHeight / 2 - 100
 	}
 
 
@@ -36,7 +36,7 @@ $(document).ready(function() {
 
 	//http://159.203.91.98:80
 	var socket_url = "http://localhost:3000"
-	var socket = io(socket_url + "/katiestream")
+	window.socket = io(socket_url + "/katiestream")
 
 	var form = $("#chat-form");
 	var inviteForm = $("#invite-form")
@@ -87,6 +87,11 @@ $(document).ready(function() {
 			$(".wait").hide();
 			$(".join").show()
 		}
+	})
+
+	//listen for audience reactions
+	socket.on('emojiVote', function(data) {
+		features.emojiDash.resizeEmoji(data)
 	})
 
 	socket.on('activate', function(msg) {
@@ -198,8 +203,6 @@ $(document).ready(function() {
 		generateVideo(video);
 	}
 
-
-
 	// ---------- Video Initialisation ---------
 	var hls = new Hls();
 	var video;
@@ -208,7 +211,7 @@ $(document).ready(function() {
 		console.log('[1]generate video- video loaded');
 		video = document.createElement('video');
 
-		// 	//HLS code -
+		// 	HLS code -
 		// 	demo --- http://qthttp.apple.com.edgesuite.net/1010qwoeiuryfg/sl.m3u8
 		// 	svrd server http://wowzaprodhd14-lh.akamaihd.net/i/58762d9c_1@384091/master.m3u8
 		var hls = new Hls();
@@ -224,22 +227,12 @@ $(document).ready(function() {
 
 	}
 
-
-
 	// ---------- HLS Callbacks ---------
 	hls.on(Hls.Events.ERROR, function(event, data) {
 
 		var errorType = data.type;
 		var errorDetails = data.details;
 		var errorFatal = data.fatal;
-
-		// switch(data.details) {
-		//   case hls.ErrorDetails.FRAG_LOAD_ERROR:
-		//     // ....
-		//     break;
-		//   default:
-		//     break;
-		// }
 
 		if (data.fatal) {
 			switch (data.type) {
@@ -343,26 +336,21 @@ $(document).ready(function() {
 					//Play the Video Stream
 					video.play();
 
-					//DAE variables
-					// dae.scale.set(1000,1000,1000); 
-					// dae.position.y = 500;
-					// dae.rotate.z = 180;
 
 				}
 
 			});
 
-			console.log(collada)
-				// console.log(collada.dae.geometries['Sphere-mesh'])
-				// collada.dae.geometries['Sphere-mesh'].doubleSided = true;
-
 		});
 
 		//--------- Load Collada Model: YUM --------
 		var YUMMY;
+		var materialYUM = new THREE.MeshPhongMaterial({
+			color: 0xff4444
+		});
 		loaderYUM = new THREE.ColladaLoader();
-		loaderYUM.options.convertUpAxis = true;
-		loaderYUM.options.centerGeometry = true;
+		// loaderYUM.options.convertUpAxis = true;
+		// loaderYUM.options.centerGeometry = true;
 		loaderYUM.load('./obj/heart.dae', function(colladaYUM) {
 			//need to set dae as the collada scene and use that in traverse
 			daeYUM = colladaYUM.scene;
@@ -370,7 +358,7 @@ $(document).ready(function() {
 
 				if (child2 instanceof THREE.Mesh) {
 					//need to add the mesh child we just created rather than the actual dae object loaded
-					// child.material = materialYUM;
+					child2.material = materialYUM;
 					YUMMY = child2;
 				}
 
@@ -391,47 +379,51 @@ $(document).ready(function() {
 		});
 		var cube2 = new THREE.Mesh(geometry2, material2);
 
-		
 
+		//--- Banner when user looks down
 		function addBanner() {
-
-		
 
 			var geometry = new THREE.BoxGeometry(4, 4, 4);
 
-			var material = new THREE.MeshPhongMaterial( { map: THREE.ImageUtils.loadTexture('images/sc.png'),  overdraw: 0.5 } );
+			var material = new THREE.MeshPhongMaterial({
+				map: THREE.ImageUtils.loadTexture('images/sc.png'),
+				overdraw: 0.5
+			});
 
 			features.banner = new THREE.Mesh(geometry, material);
-
-
 			scene.add(features.banner);
-
 			features.banner.visible = false;
+
 		}
 
-		addBanner()
+		addBanner();
 
 
-
-		//-------- YUM 3D cube part ----------------
-		// var geometry = new THREE.BoxGeometry( 3, 1, 1 );
-		// var texture2 = new THREE.TextureLoader().load( "yum.png" );
-		// // var material2 = new THREE.MeshBasicMaterial( THREE.ImageUtils.loadTexture('yum.png') );
-		// var cube = new THREE.Mesh( geometry, texture2 );
+		//----------- ANIMATE -------------
+		
 
 		var x, y, z, w, vector, cube;
 
-		//----------- ANIMATE -------------
 		function animate() {
 
 			mX = camera.quaternion._x
 			mY = camera.quaternion._y
 			mZ = camera.quaternion._z
 
-			if (mY > -0.4 && mY < .9 && mZ > -2 && mZ < -.3) {
+			vectorL = new THREE.Vector3(0, 0, -1);
+			vectorL.applyQuaternion(camera.quaternion);
+
+			x = vectorL.x.toFixed(2);
+			y = vectorL.y.toFixed(2);
+			z = vectorL.z.toFixed(2);
+
+			pos = {x : x, y:y,z:z}
+
+
+			if (y > .95) {
 
 				features.banner.visible = true;
-				
+
 			} else {
 
 				features.banner.visible = false;
@@ -443,21 +435,7 @@ $(document).ready(function() {
 			controls.update();
 			camera.updateProjectionMatrix();
 
-			vectorL = new THREE.Vector3(0, 0, -1);
-
-			vectorL.applyQuaternion(camera.quaternion);
-
-			x = vectorL.x;
-			y = vectorL.y;
-			z = vectorL.z;
-
 			TWEEN.update();
-
-			if (YUMMY){
-				YUMMY.lookAt(camera.position);
-				YUMMY.rotation.y = 90;
-			}
-			
 
 		}
 
@@ -476,7 +454,6 @@ $(document).ready(function() {
 
 			console.log("draw yum at " + x + "  " + y + "   " + z);
 
-
 			YUMMY.position.set(x * 2, y * 2, z * 2);
 			YUMMY.lookAt(camera.position);
 			YUMMY.rotation.y = 90;
@@ -491,13 +468,11 @@ $(document).ready(function() {
 			}, 2000).easing(TWEEN.Easing.Elastic.Out).start();
 
 			var myVar = setTimeout(end, 730);
-			//canvas.drawImage(yum, x, y, z);
 
 		}
 
-		$(document).dblclick(function() {
+		$('#container').dblclick(function() {
 
-			//fireEmoji();
 			fireLike();
 
 		});
@@ -507,33 +482,26 @@ $(document).ready(function() {
 
 })
 
+//------ FEATURES ---- //
 
-
-//------ Emoji Dashboard ---- //
-
-var features = {};
-
-
-function windowResized() {
-	if (features.emojiDash) features.emojiDash.emojiContainer.center().position(AUTO, windowHeight - features.emojiDash.emojiContainer.size().height);
-}
+features = {};
 
 function setup() {
 
-	noCanvas();
+	//declare features here
+	//TODO listen to feature-set from dashboard via sockets
 
-	//listen to sockets to get features request
-	//features.emojiDash = new emojiDash();
+	features.emojiDash = new emojiDash();
 
 }
 
-function emojiDash(){
+function emojiDash() {
 
-	this.on = true;
 	this.emojis = {};
 	this.latestEmoji = 'images/grinning.png';
 	this.emojiContainer = null;
 	this.build();
+	this.addListeners();
 
 }
 
@@ -559,22 +527,42 @@ emojiDash.prototype.build = function() {
 			.mouseOver(function() {
 				this.style('cursor:pointer')
 			})
-			.mousePressed(function() {
-				console.log('SRC', this.elt.src)
-				self.latestEmoji = this.elt.src;
-				if (this.popularity < 1) this.popularity += .02;
-				this.size(this.w * this.popularity, this.h * this.popularity).center();
-			});
+			.mousePressed(parent.emojiVote);
+	}
+
+	this.emojiVote = function() {
+
+		parent.latestEmoji = this.elt.src;
+		parent.latestEmojiType = this.type;
+		console.log(parent.latestEmojiType);
+
+		socket.emit('emojiVote', parent.latestEmojiType);
+		parent.fireEmoji();
+
 	}
 
 	var self = this;
 
 	this.emojiContainer = createDiv('').id('emoji-box').size(300, 100).center();
 	this.emojiContainer.position(AUTO, windowHeight - self.emojiContainer.size().height);
+
 	this.emojis.grinning = createImg('images/grinning.png', self.prepareEmoji);
+	this.emojis.grinning.type = 'grinning';
 	this.emojis.crying = createImg('images/crying.png', self.prepareEmoji);
+	this.emojis.crying.type = 'crying';
 	this.emojis.hearteyes = createImg('images/hearteyes.png', self.prepareEmoji);
+	this.emojis.hearteyes.type = 'hearteyes';
 	this.emojis.astonished = createImg('images/astonished.png', self.prepareEmoji);
+	this.emojis.astonished.type = 'astonished';
+
+
+	this.resizeEmoji = function(whichEmoji) {
+
+		var emoji = parent.emojis[whichEmoji]
+
+		if (emoji.popularity < 1) emoji.popularity += .02;
+		emoji.size(emoji.w * emoji.popularity, emoji.h * emoji.popularity).center();
+	}
 
 }
 
@@ -585,11 +573,17 @@ emojiDash.prototype.fireEmoji = function() {
 
 	var emojiBg = createImg(self.latestEmoji)
 
-	emojiBg.position(random(150, windowWidth - 200), windowHeight - random(100, 400))
+	emojiBg.position(random(150, windowWidth - 200), random(0, windowHeight - random(100, 400)))
 	emojiBg.addClass('animated-fast rubberBand')
 
 	emojiBg.elt.addEventListener('animationend', function() {
 		emojiBg.remove();
 	}, true);
 
+}
+
+emojiDash.prototype.addListeners = function() {
+	function windowResized() {
+		if (features.emojiDash) features.emojiDash.emojiContainer.center().position(AUTO, windowHeight - features.emojiDash.emojiContainer.size().height);
+	}
 }

@@ -178,6 +178,13 @@ katiestreamio.on('connection', function(socket) {
 
 	})
 
+	socket.on('emojiVote', function(data) {
+
+		console.log('got vote', data)
+		katiestreamio.emit('emojiVote', data);
+
+	})
+
 	console.log("New viewer for katie")
 
 	viewerStats[socket.id] = {

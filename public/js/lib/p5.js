@@ -2782,6 +2782,7 @@ var _globalInit = function() {
     if((window.setup && typeof window.setup === 'function') ||
       (window.draw && typeof window.draw === 'function')) {
       new p5();
+      noCanvas();
     }
   }
 };
