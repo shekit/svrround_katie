@@ -328,6 +328,8 @@ $(document).ready(function() {
 
 					//need to add the mesh child we just created rather than the actual dae object loaded
 					child.material = material;
+					child.rotation.x = Math.PI*(0.52);
+					child.rotation.y = Math.PI*(-0.3);
 					scene.add(child);
 
 					//Play the Video Stream
