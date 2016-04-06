@@ -31,7 +31,7 @@ $(document).ready(function() {
 
 	console.log("Stream");
 
-	//var socket_url = "http://159.203.91.98:80"
+	var socket_url = "http://45.55.213.136:80"
 	//var socket_url = "http://localhost:3000"
 	window.socket = io(socket_url + "/katiestream")
 
@@ -212,7 +212,7 @@ $(document).ready(function() {
 		// 	demo --- http://qthttp.apple.com.edgesuite.net/1010qwoeiuryfg/sl.m3u8
 		// 	svrd server http://wowzaprodhd14-lh.akamaihd.net/i/58762d9c_1@384091/master.m3u8
 		var hls = new Hls();
-		hls.loadSource('http://qthttp.apple.com.edgesuite.net/1010qwoeiuryfg/sl.m3u8');
+		hls.loadSource('http://wowzaprodhd14-lh.akamaihd.net/i/58762d9c_1@384091/master.m3u8');
 		hls.attachMedia(video);
 		hls.on(Hls.Events.MANIFEST_PARSED, function() {
 			console.log('[HLS] Video playing and generating graphics')
