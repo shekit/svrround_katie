@@ -178,13 +178,6 @@ katiestreamio.on('connection', function(socket) {
 
 	})
 
-	socket.on('emojiVote', function(data) {
-
-		console.log('got vote', data)
-		katiestreamio.emit('emojiVote', data);
-
-	})
-
 	console.log("New viewer for katie")
 
 	viewerStats[socket.id] = {
@@ -203,10 +196,10 @@ katiestreamio.on('connection', function(socket) {
 			"z": 1
 		}],
 		"reaction":{
-			"happy":0,
-			"emo":0,
-			"awe":0,
-			"love":0
+			"grinning":0,
+			"crying":0,
+			"hearteyes":0,
+			"astonished":0
 		}
 	}
 
@@ -248,15 +241,20 @@ katiestreamio.on('connection', function(socket) {
 			"y": data.y,
 			"z": data.z
 		})
-		console.log({
-			"x": data.x,
-			"y": data.y,
-			"z": data.z
-		})
+		// console.log({
+		// 	"x": data.x,
+		// 	"y": data.y,
+		// 	"z": data.z
+		// })
 		var avgActiveDirection = findAvgActiveDirection()
 
 		katiedashboardio.emit('direction', avgActiveDirection)
 
+	})
+
+	socket.on("emojiVote", function(data){
+		viewerStats[socket.id]["reaction"][data] += 1;
+		katiedashboardio.emit("reaction", data)
 	})
 
 	socket.on('disconnect', function() {
