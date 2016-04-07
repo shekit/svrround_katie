@@ -201,7 +201,13 @@ katiestreamio.on('connection', function(socket) {
 			"x": 0,
 			"y": 0,
 			"z": 1
-		}]
+		}],
+		"reaction":{
+			"happy":0,
+			"emo":0,
+			"awe":0,
+			"love":0
+		}
 	}
 
 	//send updated stats to katie's dashboard

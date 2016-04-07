@@ -468,6 +468,9 @@ $(document).ready(function() {
 
 			var myVar = setTimeout(end, 730);
 
+			socket.emit("heartCount","yes")
+			socket.emit("direction", {"x":x, "y":y, "z":z})
+
 		}
 
 		$('#container').dblclick(function() {
