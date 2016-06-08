@@ -31,8 +31,8 @@ $(document).ready(function() {
 
 	console.log("Stream");
 
-	var socket_url = "http://45.55.213.136:80"
-	//var socket_url = "http://localhost:3000"
+	//var socket_url = "http://45.55.213.136:80"
+	var socket_url = "http://localhost:3000"
 	window.socket = io(socket_url + "/katiestream")
 
 	var form = $("#chat-form");
@@ -485,7 +485,6 @@ $(document).ready(function() {
 })
 
 //------ FEATURES ---- //
-
 features = {};
 
 function setup() {
@@ -575,7 +574,7 @@ emojiDash.prototype.fireEmoji = function() {
 
 	var emojiBg = createImg(self.latestEmoji)
 
-	emojiBg.position(random(150, windowWidth - 200), random(0, windowHeight - random(100, 400)))
+	emojiBg.position(random(0, windowWidth - 200), random(0, windowHeight - 200))
 	emojiBg.addClass('animated-fast rubberBand')
 
 	emojiBg.elt.addEventListener('animationend', function() {

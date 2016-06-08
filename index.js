@@ -6,7 +6,7 @@ var bodyParser = require('body-parser');
 var cors = require('cors');
 var twit = require('twit');
 
-var config = require('./config/config.js')
+var config = require('./config/config-dev.js')
 
 var T = new twit(config);
 
@@ -496,6 +496,6 @@ function totalHeartCount() {
 	return totalHearts;
 }
 
-http.listen(80, function() {
+http.listen(3000, function() {
 	console.log("listening");
 })
