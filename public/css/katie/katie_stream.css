@@ -76,7 +76,7 @@ html, body, canvas{
 }
 
 #emoji-box{
-	background-color: rgba(50,50,50,.6);
+	background: rgba(0,0,0,0.3);
 	z-index:123;
 }
 

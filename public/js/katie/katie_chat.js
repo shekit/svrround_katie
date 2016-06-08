@@ -9,13 +9,13 @@ $(document).ready(function(){
 	var messageList = $("#chat-messages")
 
 
-	socket.on('chatMessage', function(msg){
+	socket.on('chatMessage', function(data){
 
 		if(placeholder.is(":visible")){
 			placeholder.hide();
 		}
 
-		var li = "<li>"+msg+"</li>"
+		var li = "<li>"+data.user.name + ": " + data.message +"</li>"
 
 		messageList.prepend(li)
 	})
