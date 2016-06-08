@@ -365,12 +365,6 @@ $(document).ready(function() {
 
 		//---------------------------------
 
-		window.addEventListener("resize", onWindowResize, false);
-
-		function onWindowResize() {
-			renderer.setSize(window.innerWidth, window.innerHeight);
-		}
-
 		var geometry2 = new THREE.BoxGeometry(4, 4, 4);
 		var material2 = new THREE.MeshBasicMaterial({
 			color: 0x00ff00
@@ -481,7 +475,15 @@ $(document).ready(function() {
 
 	}
 
-})
+		window.addEventListener("resize", onWindowResize, false);
+
+		function onWindowResize() {
+			console.log('resize')
+			if (renderer) renderer.setSize(window.innerWidth, window.innerHeight);
+			if (features.emojiDash) features.emojiDash.emojiContainer.center().position(AUTO, window.innerHeight - features.emojiDash.emojiContainer.size().height);
+		}
+
+});
 
 //------ FEATURES ---- //
 features = {};
