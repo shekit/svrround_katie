@@ -47,18 +47,18 @@ block content
       a(href='http://svrround.com')
         img(src='/images/logo.png', id='logo-img')
 
-    div(id='chat-wrapper', class='shadow')
+    div(id='chat-wrapper', class='')
       div(id='chat-subwrapper')
         
         div(id='invite-toggle')
           a(href='#', class='toggle-invite', data-toggle='popover', title='Invite a friend on Twitter', data-placement='bottom', data-content="<form id='invite-form' class='invite-form' autocomplete='off'><input type='text' placeholder='@from' class='input-sm invite-input' id='from-user'><input type='text' placeholder='@to' class='input-sm invite-input' id='to-user'><input type='submit' value='Invite' class='btn btn-default btn-custom' id='send-tweet'></form>")
-            span(class='glyphicon glyphicon-send')
+            img(src='/images/ui_share.svg' class="ui-icon")
         div(id='social-toggle')
           a(href="#", class='toggle-social')
-            span(class='glyphicon glyphicon-question-sign' data-toggle='modal' data-target='#social-modal')
+            img(src='/images/ui_about.svg' data-toggle='modal' data-target='#social-modal' class="ui-icon")
         div(id='chat-toggle')
           a(href="#", class='toggle-chat')
-            span(class='glyphicon glyphicon-remove')
+            img(src='/images/ui_closeChat.svg' id="chat-icon" class="ui-icon")
         div(id='chat-widget')
           div(id='chat-spacer')
           div(id='chat-box')
@@ -70,7 +70,7 @@ block content
                 div(class='col-xs-9 no-padding-right')
                   input(type='text', name='message', id='chat-input-message', data-emojiable="true", placeholder='Send a message', class='form-control')
                 div(class='col-xs-3 no-padding-left')
-                  input(type='submit', value='Send', class='form-control btn btn-default btn-custom')
+                  input(type='submit', value='Send', class='form-control btn btn-default btn-custom btn-send')
 
     div(id='info')
       p!= "Double Click anywhere to show Cadence your &nbsp<span class='glyphicon glyphicon-heart'></span>&nbsp"

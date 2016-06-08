@@ -4,11 +4,12 @@ $(document).ready(function() {
 		html: true
 	});
 
-	$('#chat-input-message').emojiPicker({
-		height: '300px',
-		width: '450px',
-		iconBackgroundColor: 'white'
+		$('#chat-input-message').emojiPicker({
+		height: '280px',
+		width: '400px',
+		iconBackgroundColor: 'transparent'
 	});
+
 
 	$('#container, #chat-widget').mousedown(function() {
 		if ($('.popover').is(":visible")) $('.popover').hide();
@@ -119,23 +120,21 @@ $(document).ready(function() {
 		console.log("got recipe")
 	})
 
-	$("body").on('click', '.toggle-chat', function(event) {
+	$('body').on('click', '.toggle-chat', function(event) {
 		event.preventDefault();
+
+		chatIcon = $('#chat-icon');
 
 		if (chatVisible) {
 			chatWidget.hide();
-			toggleChat.find('span').removeClass('glyphicon-remove')
-			toggleChat.find('span').addClass('glyphicon-comment')
+			chatIcon.attr('src', '/images/ui_openChat.svg');
 			chatVisible = false;
-			chatWrapper.removeClass('shadow')
 		} else {
 			chatVisible = true;
 			chatWidget.show();
-			toggleChat.find('span').removeClass('glyphicon-comment');
-			toggleChat.find('span').addClass('glyphicon-remove')
-			chatWrapper.addClass('shadow')
+			chatIcon.attr('src', '/images/ui_closeChat.svg');
 		}
-	})
+	});
 
 	$("body").on('click', '#info', function(event) {
 		event.preventDefault();
