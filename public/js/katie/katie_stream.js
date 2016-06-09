@@ -61,8 +61,8 @@ $(document).ready(function() {
 
 	console.log("Stream");
 
-	// var socket_url = "http://45.55.213.136:80"
-	var socket_url = "http://localhost:3000"
+	var socket_url = "http://45.55.213.136:80"
+	// var socket_url = "http://localhost:3000"
 	window.socket = io(socket_url + "/katiestream")
 
 	var chatForm = $("#chat-form");
