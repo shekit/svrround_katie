@@ -8,7 +8,7 @@ var twit = require('twit');
 
 var config = require('./config/config-dev.js')
 
-//var T = new twit(config);
+var T = new twit(config);
 
 var jsonfile = require('jsonfile');
 var util = require('util');
