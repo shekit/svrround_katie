@@ -153,7 +153,13 @@ startstreamio.on('connection', function(socket) {
 	socket.on('full-deactivate', function(data) {
 		isActive = false;
 		katiestreamio.emit('full-deactivate', 'yes')
-		console.log("Deactivated stream")
+		console.log("killed stream")
+	})
+
+	socket.on('resume-stream', function(data) {
+		isActive = false;
+		katiestreamio.emit('resume-stream', 'yes')
+		console.log("resuming stream")
 	})
 
 })

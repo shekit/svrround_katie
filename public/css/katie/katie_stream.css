@@ -432,6 +432,11 @@ video{
 	background-color: #d85124;
 }
 
+#wait-button-wasabi a, #wait-button-wasabi a:hover{
+	text-decoration: none;
+	color:white;
+}
+
 body{
 		height:100%;
 		width: 100%;
@@ -480,6 +485,8 @@ body{
     }
 
 	#main-frame{
+		position: relative;
+		overflow: hidden;
 		height: 100%;
 		z-index: 12312312;
 		background-color: #1C1C1C;

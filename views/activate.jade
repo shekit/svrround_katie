@@ -8,25 +8,29 @@ block content
     div(class='row')
       div(class='col-xs-12')
         br
-        br
-        br
-        a(href='#', id='activate', class='btn btn-lg btn-block btn-success') Activate
+        a(href='#', id='activate', class='btn btn-lg btn-block btn-success') Start Stream (once in the beginning)
 
     div(class='row')
       div(class='col-xs-12')
         br
         br
         br
-        br
-        a(href='#', id='deactivate', class='btn btn-lg btn-block btn-danger') Temp Deactivate
+        a(href='#', id='deactivate', class='btn btn-lg btn-block btn-danger') Pause Stream (when changing camera)
 
     div(class='row')
       div(class='col-xs-12')
         br
         br
         br
-        br
-        a(href='#', id='full-deactivate', class='btn btn-lg btn-block btn-danger') Kill Stream
+        a(href='#', id='resume', class='btn btn-lg btn-block btn-primary') Resume Stream (after camera changed)
 
+    div(class='row')
+      div(class='col-xs-12')
+        br
+        br
+        br
+        a(href='#', id='full-deactivate', class='btn btn-lg btn-block btn-danger') Kill Stream (in the end)
+
+    
 block javascript
   script(src="/js/activate.js")

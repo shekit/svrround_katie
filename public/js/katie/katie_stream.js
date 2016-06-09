@@ -207,7 +207,17 @@ $(document).ready(function() {
 		$("#stream-frame").hide();
 		$("#join-button-wasabi").hide();
 		$("#wait-button-wasabi").show();
-		$("#wait-button-wasabi").html("Stream's over! Sign up for more!")
+		$("#wait-button-wasabi").html("<a href='http://svrround.com'>Stream's over! Sign up for more!</a>")
+	})
+
+	socket.on('resume-stream', function(msg) {
+		console.log('resumed strem')
+		// throw up a message to say stream is over
+		$("#main-frame").hide();
+		$("#stream-frame").show();
+		$("#join-button-wasabi").hide();
+		$("#wait-button-wasabi").show();
+		$("#wait-button-wasabi").html("Be back soon, don't go anywhere!")
 	})
 
 	
