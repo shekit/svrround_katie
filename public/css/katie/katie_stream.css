@@ -424,6 +424,14 @@ video{
 
 /*WASABI CSS*/
 
+#wait-button-wasabi, #join-button-wasabi{
+	background-color: #FF9900;
+}
+
+#wait-button-wasabi:hover, #join-button-wasabi:hover {
+	background-color: #d85124;
+}
+
 body{
 		height:100%;
 		width: 100%;

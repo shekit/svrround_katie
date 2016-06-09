@@ -149,6 +149,13 @@ startstreamio.on('connection', function(socket) {
 		katiestreamio.emit('deactivate', 'yes')
 		console.log("Deactivated stream")
 	})
+
+	socket.on('full-deactivate', function(data) {
+		isActive = false;
+		katiestreamio.emit('full-deactivate', 'yes')
+		console.log("Deactivated stream")
+	})
+
 })
 
 // SAVE VIEWER stats - eventually move to DB

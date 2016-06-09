@@ -61,7 +61,7 @@ $(document).ready(function() {
 
 	console.log("Stream");
 
-	//var socket_url = "http://45.55.213.136:80"
+	// var socket_url = "http://45.55.213.136:80"
 	var socket_url = "http://localhost:3000"
 	window.socket = io(socket_url + "/katiestream")
 
@@ -197,7 +197,17 @@ $(document).ready(function() {
 		$("#stream-frame").hide();
 		$("#join-button-wasabi").hide();
 		$("#wait-button-wasabi").show();
-		$("#wait-button-wasabi").html("Not currently streaming")
+		$("#wait-button-wasabi").html("Be back soon, don't go anywhere!")
+	})
+
+	socket.on('full-deactivate', function(msg) {
+		console.log('full deactivate')
+		// throw up a message to say stream is over
+		$("#main-frame").show();
+		$("#stream-frame").hide();
+		$("#join-button-wasabi").hide();
+		$("#wait-button-wasabi").show();
+		$("#wait-button-wasabi").html("Stream's over! Sign up for more!")
 	})
 
 	
