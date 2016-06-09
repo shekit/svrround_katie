@@ -1,16 +1,50 @@
 $(document).ready(function() {
 
+	var userAgent = "User-agent header sent: " + navigator.userAgent;
+
+	var isMobile = {
+		Windows: function() {
+			return /IEMobile/i.test(navigator.userAgent);
+		},
+		Android: function() {
+			return /Android/i.test(navigator.userAgent);
+		},
+		BlackBerry: function() {
+			return /BlackBerry/i.test(navigator.userAgent);
+		},
+		iOS: function() {
+			return /iPhone|iPad|iPod/i.test(navigator.userAgent);
+		},
+		Safari: function() {
+			return /Safari/i.test(navigator.userAgent);
+		},
+		any: function() {
+			return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Windows());
+		}
+	};
+
+	if (isMobile.any()) {
+
+		$('.join-button').hide();
+
+		alert('Please use Chrome on a desktop!');
+
+
+	}
+
+
+
 	$('[data-toggle="popover"]').popover({
 		html: true
 	});
 
-		$('#chat-input-message').emojiPicker({
+	$('#chat-input-message').emojiPicker({
 		height: '280px',
 		width: '400px',
 		iconBackgroundColor: 'transparent'
 	});
 
-	
+
 
 	$.ajax({
 		url: 'https://randomuser.me/api/',
@@ -62,7 +96,7 @@ $(document).ready(function() {
 	console.log("Stream");
 
 	var socket_url = "http://45.55.213.136:80"
-	// var socket_url = "http://localhost:3000"
+		// var socket_url = "http://localhost:3000"
 	window.socket = io(socket_url + "/katiestream")
 
 	var chatForm = $("#chat-form");
@@ -121,11 +155,11 @@ $(document).ready(function() {
 	// })
 
 	function validateEmail(email) {
-  		var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  		return re.test(email);
+		var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+		return re.test(email);
 	}
 
-	$(".signup-btn").on('click', function(event){
+	$(".signup-btn").on('click', function(event) {
 		var message = emailField.val();
 
 		var testMessage = validateEmail(message)
@@ -135,8 +169,8 @@ $(document).ready(function() {
 		if (message && testMessage) {
 			socketemail.emit('email', message);
 			console.log("form email")
-			//show thank you
-			//form.hide();
+				//show thank you
+				//form.hide();
 			$("#signupForm").hide();
 			emailField.val("");
 		}
@@ -146,10 +180,10 @@ $(document).ready(function() {
 	$("body").on('click', '#signupForm', function(event) {
 		event.preventDefault();
 
-		if(!emailField.is(':focus') && !$(".signup-btn").is(':focus')){
+		if (!emailField.is(':focus') && !$(".signup-btn").is(':focus')) {
 			$("#signupForm").hide();
 		}
-		
+
 	})
 
 
@@ -202,7 +236,7 @@ $(document).ready(function() {
 
 	socket.on('full-deactivate', function(msg) {
 		console.log('full deactivate')
-		// throw up a message to say stream is over
+			// throw up a message to say stream is over
 		$("#main-frame").show();
 		$("#stream-frame").hide();
 		$("#join-button-wasabi").hide();
@@ -212,7 +246,7 @@ $(document).ready(function() {
 
 	socket.on('resume-stream', function(msg) {
 		console.log('resumed strem')
-		// throw up a message to say stream is over
+			// throw up a message to say stream is over
 		$("#main-frame").hide();
 		$("#stream-frame").show();
 		$("#join-button-wasabi").hide();
@@ -220,7 +254,7 @@ $(document).ready(function() {
 		$("#wait-button-wasabi").html("Be back soon, don't go anywhere!")
 	})
 
-	
+
 	socket.on('chatMessage', function(data) {
 
 		//if initial placeholder text in chat is still there remove it
@@ -477,8 +511,8 @@ $(document).ready(function() {
 
 					//need to add the mesh child we just created rather than the actual dae object loaded
 					child.material = material;
-					child.rotation.x = Math.PI*(0.52);
-					child.rotation.y = Math.PI*(-0.3);
+					child.rotation.x = Math.PI * (0.52);
+					child.rotation.y = Math.PI * (-0.3);
 					scene.add(child);
 
 					//Play the Video Stream
@@ -542,7 +576,7 @@ $(document).ready(function() {
 
 
 		//----------- ANIMATE -------------
-		
+
 
 		var x, y, z, w, vector, cube;
 
@@ -559,7 +593,11 @@ $(document).ready(function() {
 			y = vectorL.y.toFixed(2);
 			z = vectorL.z.toFixed(2);
 
-			pos = {x : x, y:y,z:z}
+			pos = {
+				x: x,
+				y: y,
+				z: z
+			}
 
 
 			if (y > .95) {
@@ -611,8 +649,12 @@ $(document).ready(function() {
 
 			var myVar = setTimeout(end, 730);
 
-			socket.emit("heartCount","yes")
-			socket.emit("direction", {"x":x, "y":y, "z":z})
+			socket.emit("heartCount", "yes")
+			socket.emit("direction", {
+				"x": x,
+				"y": y,
+				"z": z
+			})
 
 		}
 
@@ -625,13 +667,13 @@ $(document).ready(function() {
 
 	}
 
-		window.addEventListener("resize", onWindowResize, false);
+	window.addEventListener("resize", onWindowResize, false);
 
-		function onWindowResize() {
-			//console.log('resize')
-			if (renderer) renderer.setSize(window.innerWidth, window.innerHeight);
-			if (features.emojiDash) features.emojiDash.emojiContainer.center().position(AUTO, window.innerHeight - features.emojiDash.emojiContainer.size().height);
-		}
+	function onWindowResize() {
+		//console.log('resize')
+		if (renderer) renderer.setSize(window.innerWidth, window.innerHeight);
+		if (features.emojiDash) features.emojiDash.emojiContainer.center().position(AUTO, window.innerHeight - features.emojiDash.emojiContainer.size().height);
+	}
 
 });
 
@@ -742,18 +784,17 @@ emojiDash.prototype.addListeners = function() {
 
 
 
-
 // LANDING PAGE: WASABI
 
 
-window.addEventListener("load",function(){
+window.addEventListener("load", function() {
 
 	animate.loop(1);
-	document.getElementById("wait-button-wasabi").addEventListener("click",function(){
+	document.getElementById("wait-button-wasabi").addEventListener("click", function() {
 		animate.timeCheck();
 	});
 
-	document.getElementById("join-button-wasabi").addEventListener("click",function(){
+	document.getElementById("join-button-wasabi").addEventListener("click", function() {
 		$('#main-frame').hide();
 		$('#stream-frame').show();
 	});
@@ -763,11 +804,11 @@ window.addEventListener("load",function(){
 var animate = {};
 var canJoin = false;
 
-animate.loop = function(step){
+animate.loop = function(step) {
 
-	if (step > 4){
+	if (step > 4) {
 		step = 1;
-		for(i = 2; i < 5; i++){
+		for (i = 2; i < 5; i++) {
 			document.getElementById('shawn-wasabi-layer' + i).style.opacity = 0;
 		}
 	}
@@ -775,28 +816,28 @@ animate.loop = function(step){
 	document.getElementById('shawn-wasabi-layer' + step).style.opacity = 1;
 
 	step++;
-	setTimeout(function(){
+	setTimeout(function() {
 		animate.loop(step);
-	},400);
- }
+	}, 400);
+}
 
- animate.timeCheck = function(){
- 	var showTime = 1665498800;
- 	var unixTimeStamp = Math.round(+new Date()/1000);
+animate.timeCheck = function() {
+	var showTime = 1665498800;
+	var unixTimeStamp = Math.round(+new Date() / 1000);
 
- 	if(unixTimeStamp < showTime){
- 		//not till showTime;
- 		//alert("not yet");
- 		var transform = document.getElementById("place").style.transform;
- 		if(transform == "" || transform == "rotateY(0deg)"){
- 		document.getElementById("place").style.transform = "rotateY(360deg)";
- 		}else{
- 			document.getElementById("place").style.transform = "rotateY(0deg)";
- 		}
+	if (unixTimeStamp < showTime) {
+		//not till showTime;
+		//alert("not yet");
+		var transform = document.getElementById("place").style.transform;
+		if (transform == "" || transform == "rotateY(0deg)") {
+			document.getElementById("place").style.transform = "rotateY(360deg)";
+		} else {
+			document.getElementById("place").style.transform = "rotateY(0deg)";
+		}
 
- 	}else{
- 		//join!
- 		// alert("join");
- 	}
+	} else {
+		//join!
+		// alert("join");
+	}
 
- }
+}
