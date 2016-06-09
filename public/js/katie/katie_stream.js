@@ -22,9 +22,9 @@ $(document).ready(function() {
 			//pick random color for username
 
 			user.color = {};
-			user.color.r = Math.floor(Math.random() * 200 + 55);
-			user.color.g = Math.floor(Math.random() * 200 + 55);
-			user.color.b = Math.floor(Math.random() * 200 + 55);
+			user.color.r = Math.floor(Math.random() * 150 + 105);
+			user.color.g = Math.floor(Math.random() * 150 + 105);
+			user.color.b = Math.floor(Math.random() * 150 + 105);
 
 			// get user ip address
 
@@ -46,7 +46,7 @@ $(document).ready(function() {
 	});
 
 	$('#container').on('mousedown', function() {
-		if (features.banner.visible && mouseIsCenter()) window.open('https://soundcloud.com/duendita', '_blank')
+		if (features.banner.visible && mouseIsCenter()) window.open('https://soundcloud.com/sssshawnnnn/', '_blank')
 	});
 
 	$('#container').on('mousemove', function() {
@@ -265,7 +265,7 @@ $(document).ready(function() {
 		// 	demo --- http://qthttp.apple.com.edgesuite.net/1010qwoeiuryfg/sl.m3u8
 		// 	svrd server http://wowzaprodhd14-lh.akamaihd.net/i/58762d9c_1@384091/master.m3u8
 		var hls = new Hls();
-		hls.loadSource('http://wowzaprodhd14-lh.akamaihd.net/i/58762d9c_1@384091/master.m3u8');
+		hls.loadSource('http://qthttp.apple.com.edgesuite.net/1010qwoeiuryfg/sl.m3u8');
 		hls.attachMedia(video);
 		hls.on(Hls.Events.MANIFEST_PARSED, function() {
 			console.log('[HLS] Video playing and generating graphics')
