@@ -8,7 +8,7 @@ var twit = require('twit');
 
 var config = require('./config/config.js')
 
-var T = new twit(config);
+//var T = new twit(config);
 
 var jsonfile = require('jsonfile');
 var util = require('util');
@@ -496,6 +496,6 @@ function totalHeartCount() {
 	return totalHearts;
 }
 
-http.listen(80, function() {
+http.listen(3000, function() {
 	console.log("listening");
 })

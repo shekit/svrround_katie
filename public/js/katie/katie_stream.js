@@ -31,8 +31,8 @@ $(document).ready(function() {
 
 	console.log("Stream");
 
-	var socket_url = "http://45.55.213.136:80"
-	//var socket_url = "http://localhost:3000"
+	//var socket_url = "http://45.55.213.136:80"
+	var socket_url = "http://localhost:3000"
 	window.socket = io(socket_url + "/katiestream")
 
 	var form = $("#chat-form");
@@ -201,7 +201,7 @@ $(document).ready(function() {
 	}
 
 	// ---------- Video Initialisation ---------
-	var hls = new Hls();
+	/*var hls = new Hls();
 	var video;
 
 	function generateVideo() {
@@ -221,6 +221,20 @@ $(document).ready(function() {
 
 
 		});
+
+	}*/
+
+	var video;
+
+	function generateVideo() {
+		console.log('[1]generate video- video loaded');
+		video = document.createElement('video');
+
+		video.autoplay = true;
+		video.loop = true;
+		video.src = "./video/grad.MP4";
+			generateGraphics(video);
+
 
 	}
 
