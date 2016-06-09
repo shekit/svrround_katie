@@ -2,11 +2,11 @@ $(document).ready(function(){
 	console.log("Katie Dashboard")
 
 
-	//var socket_url = "http://localhost:3000"
-	//var route_url = "http://localhost:3000"
+	var socket_url = "http://localhost:3000"
+	var route_url = "http://localhost:3000"
 
-	var socket_url = "http://45.55.213.136:80"
-	var route_url = "http://45.55.213.136:80"
+	// var socket_url = "http://45.55.213.136:80"
+	// var route_url = "http://45.55.213.136:80"
 
 	var totalViewers = $("#totalViewers");
 	var activeViewers = $("#activeViewers");
