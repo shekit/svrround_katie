@@ -95,7 +95,7 @@ video{
 
 #info {
 	position: absolute;
-	width: auto;
+	width: 395px;
 	font-size: 14px;
 	bottom: 10px;
 	left:10px;
@@ -104,6 +104,37 @@ video{
 	color: #fff;
 	cursor: pointer;
 }
+
+#signupForm {
+	position: absolute;
+	width: 395px;
+	font-size: 14px;
+	bottom: 100px;
+	left:10px;
+	background: rgba(0,0,0,0.5);
+	padding: 10px;
+	color: #fff;
+	cursor: pointer;
+}
+
+.form-group{
+	display: inline;
+}
+
+.email {
+	width: 65%;
+	border: none;
+}
+
+.email, .signup-btn{
+	display: inline;
+}
+
+.signup-btn {
+	margin-top: -2px;
+}
+
+
 
 
 .glyphicon {
@@ -115,6 +146,7 @@ video{
 .dismiss-info {
 	font-style: italic;
 	font-size: 11px;
+	margin-bottom: 0;
 }
 
 

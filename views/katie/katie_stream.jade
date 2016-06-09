@@ -75,6 +75,13 @@ block content
     div(id='info')
       p!= "Double Click anywhere to show Shawn and friends your &nbsp<span class='glyphicon glyphicon-heart'></span>&nbsp"
       p(class='dismiss-info') (click to dismiss)
+    div(id='signupForm')
+      form(id='signup', class='inline-form')
+        div(class='form-group')
+          input(type='email', placeholder='Your Email', class='form-control email')
+        div(class='form-group')
+          input(type='submit', value='Stay Updated', class='btn btn-default btn-custom signup-btn')
+      p(class='dismiss-info') (click to dismiss)
 
                     
 

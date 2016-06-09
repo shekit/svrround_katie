@@ -10,6 +10,7 @@ $(document).ready(function() {
 		iconBackgroundColor: 'transparent'
 	});
 
+	
 
 	$.ajax({
 		url: 'https://randomuser.me/api/',
@@ -60,8 +61,8 @@ $(document).ready(function() {
 
 	console.log("Stream");
 
-	//var socket_url = "http://45.55.213.136:80"
-	var socket_url = "http://localhost:3000"
+	var socket_url = "http://45.55.213.136:80"
+	//var socket_url = "http://localhost:3000"
 	window.socket = io(socket_url + "/katiestream")
 
 	var chatForm = $("#chat-form");
@@ -94,6 +95,37 @@ $(document).ready(function() {
 		$('.emojiPicker').hide();
 
 	});
+
+	var socketemail = io(socket_url + "/email")
+
+	var form = $("#signup");
+
+	var emailField = $(".email")
+
+	form.on('submit', function(event) {
+		event.preventDefault();
+
+		var message = emailField.val();
+
+		if (message) {
+			socketemail.emit('email', message);
+
+			//show thank you
+			//form.hide();
+			$("#signupForm").hide();
+		}
+
+		emailField.val("");
+	})
+
+	$("body").on('click', '#signupForm', function(event) {
+		event.preventDefault();
+
+		if(!emailField.is(':focus') && !$(".signup-btn").is(':focus')){
+			$("#signupForm").hide();
+		}
+		
+	})
 
 	$(document).on('submit', "#invite-form", function(e) {
 		e.preventDefault();
@@ -254,7 +286,7 @@ $(document).ready(function() {
 	}
 
 	// ---------- Video Initialisation ---------
-	/*var hls = new Hls();
+	var hls = new Hls();
 	var video;
 
 	function generateVideo() {
@@ -275,21 +307,21 @@ $(document).ready(function() {
 
 		});
 
-	}*/
-
-	var video;
-
-	function generateVideo() {
-		console.log('[1]generate video- video loaded');
-		video = document.createElement('video');
-
-		video.autoplay = true;
-		video.loop = true;
-		video.src = "./video/grad.MP4";
-			generateGraphics(video);
-
-
 	}
+
+	// var video;
+
+	// function generateVideo() {
+	// 	console.log('[1]generate video- video loaded');
+	// 	video = document.createElement('video');
+
+	// 	video.autoplay = true;
+	// 	video.loop = true;
+	// 	video.src = "./video/grad.MP4";
+	// 		generateGraphics(video);
+
+
+	// }
 
 	// ---------- HLS Callbacks ---------
 	hls.on(Hls.Events.ERROR, function(event, data) {
