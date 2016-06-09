@@ -174,8 +174,8 @@ $(document).ready(function() {
 	socket.on('status', function(msg) {
 		if (msg == true) {
 			//change button to join
-			$(".wait").hide();
-			$(".join").show()
+			$("#wait-button-wasabi").hide();
+			$("#join-button-wasabi").show()
 		}
 	})
 
@@ -186,15 +186,18 @@ $(document).ready(function() {
 
 	socket.on('activate', function(msg) {
 		// activate join button for connected clients
-		$(".wait").hide();
-		$(".join").show();
+
+		$("#wait-button-wasabi").hide();
+		$("#join-button-wasabi").show()
 	})
 
 	socket.on('deactivate', function(msg) {
 		// throw up a message to say stream is over
-		$("#welcome").show();
-		$(".wait").show();
-		$(".join").hide();
+		$("#main-frame").show();
+		$("#stream-frame").hide();
+		$("#join-button-wasabi").hide();
+		$("#wait-button-wasabi").show();
+		$("#wait-button-wasabi").html("Not currently streaming")
 	})
 
 	
@@ -673,7 +676,7 @@ emojiDash.prototype.build = function() {
 	var self = this;
 
 	this.emojiContainer = createDiv('').id('emoji-box').size(300, 100).center();
-	this.emojiContainer.position(AUTO, windowHeight - self.emojiContainer.size().height);
+	this.emojiContainer.position(AUTO, windowHeight - self.emojiContainer.size().height).parent('stream-frame');
 
 	this.emojis.grinning = createImg('images/grinning.png', self.prepareEmoji);
 	this.emojis.grinning.type = 'grinning';
@@ -716,3 +719,64 @@ emojiDash.prototype.addListeners = function() {
 		if (features.emojiDash) features.emojiDash.emojiContainer.center().position(AUTO, windowHeight - features.emojiDash.emojiContainer.size().height);
 	}
 }
+
+
+
+
+// LANDING PAGE: WASABI
+
+
+window.addEventListener("load",function(){
+
+	animate.loop(1);
+	document.getElementById("wait-button-wasabi").addEventListener("click",function(){
+		animate.timeCheck();
+	});
+
+	document.getElementById("join-button-wasabi").addEventListener("click",function(){
+		$('#main-frame').hide();
+		$('#stream-frame').show();
+	});
+
+});
+
+var animate = {};
+var canJoin = false;
+
+animate.loop = function(step){
+
+	if (step > 4){
+		step = 1;
+		for(i = 2; i < 5; i++){
+			document.getElementById('shawn-wasabi-layer' + i).style.opacity = 0;
+		}
+	}
+
+	document.getElementById('shawn-wasabi-layer' + step).style.opacity = 1;
+
+	step++;
+	setTimeout(function(){
+		animate.loop(step);
+	},400);
+ }
+
+ animate.timeCheck = function(){
+ 	var showTime = 1665498800;
+ 	var unixTimeStamp = Math.round(+new Date()/1000);
+
+ 	if(unixTimeStamp < showTime){
+ 		//not till showTime;
+ 		//alert("not yet");
+ 		var transform = document.getElementById("place").style.transform;
+ 		if(transform == "" || transform == "rotateY(0deg)"){
+ 		document.getElementById("place").style.transform = "rotateY(360deg)";
+ 		}else{
+ 			document.getElementById("place").style.transform = "rotateY(0deg)";
+ 		}
+
+ 	}else{
+ 		//join!
+ 		// alert("join");
+ 	}
+
+ }

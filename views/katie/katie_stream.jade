@@ -8,79 +8,103 @@ block css
 
 
 block content
-  div(class='jumbotron' id='welcome')
-    h1 Hello.
-    p Welcome to the home of the first ever social 360° live streaming experiences.
-    p(class='wait')
-      a(class='btn btn-primary btn-lg btn-custom') Next stream starts at 8:00 pm (EST)
-    p(class='join')
-      a(class='btn btn-primary btn-lg btn-custom' id='join' role='button') Join
-    h6 Note: Streaming quality is based on your internet connection
+  #main-frame
+    .header
+      #logo-box-back.logo-box
+        #logo-box-middle.logo-box
+          #logo-box-Front.logo-box
+    .cover-info.lamama.sumsung.wasabi
+      h2
+        | Shawn 
+        span(style='color:#85ff8f') Wasabi
+      h1
+        | + Friends : 
+        span#sp1 N
+        span#sp2 Y
+        span#sp3 C
+        |  2016
+      |       Live Stream with SVRROUND™️
+      #sub-title It's a party
+      #place
+        h4 7:00 PM (EST)
+        |         June 9, 2016
+        br
+        |         Baby's All Right, Brooklyn, NYC
+      #join-button-wasabi.join-button Join
+      #wait-button-wasabi.join-button Stream hasn't started
+    #shawn-wasabi-layer0.shawn-wasabi
+      #shawn-wasabi-layer1.shawn-wasabi
+        #shawn-wasabi-layer2.shawn-wasabi
+          #shawn-wasabi-layer3.shawn-wasabi
+            #shawn-wasabi-layer4.shawn-wasabi
+    p.note-info
+      | * Streaming quality is based on your internet connection. Safari not supported.
 
-  div(class="modal fade" id="social-modal" role="dialog")
-    div(class="modal-dialog")
-      div(class="modal-content")
-        div(class="modal-header")
-          button(type="button" class="close" data-dismiss="modal" aria-label="Close")
-            span(aria-hidden="true") &times;
+  div(id="stream-frame")
+    div(class="modal fade" id="social-modal" role="dialog")
+      div(class="modal-dialog")
+        div(class="modal-content")
+          div(class="modal-header")
+            button(type="button" class="close" data-dismiss="modal" aria-label="Close")
+              span(aria-hidden="true") &times;
 
-        div(class="modal-body")
-          p(id= "more-info") Svrround is a social platform for 360 live streaming made for creatives: musicians, bloggers, journalists, theatre and more.
-          p(id="social-container")
-            ul(class='list-inline list-unstyled text-center' id="social-links")
-              li
-                p
-                  a(href='https://www.facebook.com/svrroundvr', target='blank') Facebook
-              li
-                p
-                  a(href='https://www.twitter.com/svrroundvr', target='blank') Twitter
-              li
-                p
-                  a(href='mailto:davidcihelna@gmail.com', class='contact', target='blank') Stream with us
+          div(class="modal-body")
+            p(id= "more-info") Svrround is a social platform for 360 live streaming made for creatives: musicians, bloggers, journalists, theatre and more.
+            p(id="social-container")
+              ul(class='list-inline list-unstyled text-center' id="social-links")
+                li
+                  p
+                    a(href='https://www.facebook.com/svrroundvr', target='blank') Facebook
+                li
+                  p
+                    a(href='https://www.twitter.com/svrroundvr', target='blank') Twitter
+                li
+                  p
+                    a(href='mailto:davidcihelna@gmail.com', class='contact', target='blank') Stream with us
+            
+          div(class="modal-footer")
+            button(type="button" class="btn btn-default" data-dismiss="modal") Close
+
+    div(class='container-fluid')
+      div(id='container')
+      div(id='logo')
+        a(href='http://svrround.com')
+          img(src='/images/logo.png', id='logo-img')
+
+      div(id='chat-wrapper', class='')
+        div(id='chat-subwrapper')
           
-        div(class="modal-footer")
-          button(type="button" class="btn btn-default" data-dismiss="modal") Close
+          div(id='invite-toggle')
+            a(href='#', class='toggle-invite', data-toggle='popover', title='Invite a friend on Twitter', data-placement='bottom', data-content="<form id='invite-form' class='invite-form' autocomplete='off'><input type='text' placeholder='@from' class='input-sm invite-input' id='from-user'><input type='text' placeholder='@to' class='input-sm invite-input' id='to-user'><input type='submit' value='Invite' class='btn btn-default btn-custom' id='send-tweet'></form>")
+              img(src='/images/ui_share.svg' class="ui-icon")
+          div(id='social-toggle')
+            a(href="#", class='toggle-social')
+              img(src='/images/ui_about.svg' data-toggle='modal' data-target='#social-modal' class="ui-icon")
+          div(id='chat-toggle')
+            a(href="#", class='toggle-chat')
+              img(src='/images/ui_closeChat.svg' id="chat-icon" class="ui-icon")
+          div(id='chat-widget')
+            div(id='chat-spacer')
+            div(id='chat-box')
+              ul(id='chat-message-list', class='list-unstyled')
+              p(class='text-center placeholder-text') Chat with fellow viewers.
+            div(id='chat-message')
+              div(class='row chat-row')
+                form(id='chat-form', class='form-inline' ,autocomplete='off')
+                  div(class='col-xs-9 no-padding-right')
+                    input(type='text', name='message', id='chat-input-message', data-emojiable="true", placeholder='Send a message', class='form-control')
+                  div(class='col-xs-3 no-padding-left')
+                    input(type='submit', value='Send', class='form-control btn btn-default btn-custom btn-send')
 
-  div(class='container-fluid')
-    div(id='container')
-    div(id='logo')
-      a(href='http://svrround.com')
-        img(src='/images/logo.png', id='logo-img')
-
-    div(id='chat-wrapper', class='')
-      div(id='chat-subwrapper')
-        
-        div(id='invite-toggle')
-          a(href='#', class='toggle-invite', data-toggle='popover', title='Invite a friend on Twitter', data-placement='bottom', data-content="<form id='invite-form' class='invite-form' autocomplete='off'><input type='text' placeholder='@from' class='input-sm invite-input' id='from-user'><input type='text' placeholder='@to' class='input-sm invite-input' id='to-user'><input type='submit' value='Invite' class='btn btn-default btn-custom' id='send-tweet'></form>")
-            img(src='/images/ui_share.svg' class="ui-icon")
-        div(id='social-toggle')
-          a(href="#", class='toggle-social')
-            img(src='/images/ui_about.svg' data-toggle='modal' data-target='#social-modal' class="ui-icon")
-        div(id='chat-toggle')
-          a(href="#", class='toggle-chat')
-            img(src='/images/ui_closeChat.svg' id="chat-icon" class="ui-icon")
-        div(id='chat-widget')
-          div(id='chat-spacer')
-          div(id='chat-box')
-            ul(id='chat-message-list', class='list-unstyled')
-            p(class='text-center placeholder-text') Chat with fellow viewers.
-          div(id='chat-message')
-            div(class='row chat-row')
-              form(id='chat-form', class='form-inline' ,autocomplete='off')
-                div(class='col-xs-9 no-padding-right')
-                  input(type='text', name='message', id='chat-input-message', data-emojiable="true", placeholder='Send a message', class='form-control')
-                div(class='col-xs-3 no-padding-left')
-                  input(type='submit', value='Send', class='form-control btn btn-default btn-custom btn-send')
-
-    div(id='info')
-      p!= "Double Click anywhere to show Shawn and friends your &nbsp<span class='glyphicon glyphicon-heart'></span>&nbsp"
-      p(class='dismiss-info') (click to dismiss)
-    div(id='signupForm')
-      p(class='email-info') Enter your email for updates from Svrround
-      form(id='sign-up', class='inline-form')
-        input(type='email', placeholder='Your Email', class='form-control email')
-        input(type='submit', value='Stay Updated', class='btn btn-default btn-custom signup-btn')
-      p(class='dismiss-info') (click to dismiss)
+      div(id='info')
+        p!= "Double Click anywhere to show Shawn and friends your &nbsp<span class='glyphicon glyphicon-heart'></span>&nbsp"
+        p(class='dismiss-info') (click to dismiss)
+      div(id='signupForm')
+        p(class='email-info') Enter your email for more events from Svrround
+        form(id='sign-up', class='inline-form')
+          input(type='email', placeholder='Your Email', class='form-control email')
+          input(type='submit', value='Stay Updated', class='btn btn-default btn-custom signup-btn')
+        p(class='dismiss-info') (click to dismiss)
 
                     
 

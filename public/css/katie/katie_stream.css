@@ -288,6 +288,7 @@ video{
 #chat-input-message{
 	padding-right:40px;
 	height:43px;
+	width:200px;
 	position: relative;
 	left:0;
 	bottom:0;
@@ -416,4 +417,325 @@ video{
 #more-info {
 	font-size:18px;
 	margin:18px;
+}
+
+
+
+
+/*WASABI CSS*/
+
+body{
+		height:100%;
+		width: 100%;
+		padding: 0px;
+		margin: 0px;
+	}
+
+	.header{
+		min-height: 80px;
+		height: 16%;
+		width: 100%;
+	}
+
+	.logo-box{
+		height: 100%;
+		background-position: center center;
+	}
+
+	#logo-box-back{
+		background-repeat: repeat-x;
+		background-image: url("/wasabi-landing/img/logo_back.svg");
+	}
+
+	#logo-box-middle{
+		background-size: 32%;
+		background-repeat: no-repeat;
+		background-position: 3.3% center;
+		background-image: url("wasabi-landing/img/logo_mid.svg");
+    }
+
+	#logo-box-front{
+		background-size: 34%;
+		background-repeat: no-repeat;
+		background-position: 2% center;
+		background-image: url("wasabi-landing/img/logo_front.svg");
+		animation-name: logo-blink;
+      	animation-duration: 3s;
+      	animation-iteration-count: infinite;
+      	animation-timing-function: ease-in-out;
+	}
+
+	@keyframes logo-blink {
+    0%   {opacity: 0;}
+    50% {opacity: 1;}
+    100% {opacity: 0;}
+    }
+
+	#main-frame{
+		height: 100%;
+		z-index: 12312312;
+		background-color: #1C1C1C;
+		background-size: cover;
+		background-position: center;
+		background-repeat: no-repeat;
+
+	}
+
+	.cover-info{
+		top: 20%;
+		right: 0px;
+		left: 0px;
+		margin: auto;
+		position: absolute;
+		height: 55%;
+		width: 65%;
+		min-width: 360px;
+		min-height: 300px;
+		color: #FFF;
+		text-shadow:0px 0px 5px #000;
+	}
+
+	.join-button{
+		border: solid 0.5px #AA3634;
+		background-color: rgba(255,45,10,0.2);
+		position: absolute;
+		color: #FFF;
+		left: 0px;
+		right: 0px;
+		margin: auto;
+		bottom: -65px;
+		height: 56px;
+		padding-top: 14px;
+		width: 32%;
+		text-align: center;
+		cursor: pointer;
+		border-radius: 6px;
+		font-size: 20px;
+		min-width: 180px;
+		transition: background 0.2s ease-in-out;
+	}
+
+	#join-button-wasabi{
+		display:none;
+	}
+
+	.join-button:hover{
+		background-color: #BB4334;
+	}
+
+	.note-info{
+		color: #777;
+	}
+
+	body{
+overflow: hidden;
+}
+
+#stream-frame{
+	display:none;
+}
+
+#main-frame{
+	background-color: #0FCCFF;
+	background-image: url("wasabi-landing/img/shawn_wasabi/window_bottom.svg");
+	background-position: bottom;
+	background-repeat: repeat-x;
+	background-size: auto 25%;
+}
+
+	#logo-box-back{
+		background-image: url("wasabi-landing/img/logo_back_light.svg");
+	}
+
+	#logo-box-middle{
+		background-image: url("wasabi-landing/img/logo_mid_light.svg");
+    }
+
+	#logo-box-front{
+		background-image: url("wasabi-landing/img/logo_front_light.svg");
+	}
+
+	#sub-title{
+		top: 50%;
+		left: 21%;
+		position: absolute;
+		height: 120px;
+		width: 120px;
+		border-radius: 50%;
+		background-color: rgba(255,255,255,0.6);
+		text-align: center;
+		padding-top: 40px;
+		z-index: 99;
+		color: #e800ba;
+		font-weight: bolder;
+		font-size: 22px;
+		background-size: contain;
+		background-repeat: no-repeat;
+		background-position: center;
+		background-image: url("wasabi-landing/img/shawn_wasabi/bubles.svg");
+	}
+
+	#place{
+		top: 61%;
+		left: 7%;
+		position: absolute;
+		height: 180px;
+		width: 180px;
+		border-radius: 50%;
+		background-color: rgba(255,255,255,0.35);
+		padding-top: 32px;
+		text-align: center;
+		font-weight: bold;
+		font-size: 16px;
+		color: #fef9c3;
+		transition: transform 0.6s ease-in-out;
+	}
+
+h2{
+	margin-bottom:5px;
+	font-size: 80px;
+	text-shadow: 1px 1px 4px rgba(0,0,0,0.4);
+}
+h1{
+	margin-top:0px;
+	font-size: 48px;
+	text-shadow: 1px 1px 4px rgba(0,0,0,0.4);
+}
+
+.wasabi{
+	text-shadow:none;
+	width: 83%;
+	top: 17%;
+	z-index: 99;
+}
+
+.shawn-wasabi{
+	height: 100%;
+	width: 100%;	
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: center;
+	opacity: 0;
+	transition:opacity 0.2s ease-in-out;
+}
+
+@keyframes rotate {
+    0%   {transform: rotate(-30deg);top: 8%;}
+    22%   {transform: rotate(-30deg);top: 8%;}
+    25%   {transform: rotate(-120deg);top: 8%;}
+    47%   {transform: rotate(-120deg);top: 15%;}
+    50%   {transform: rotate(-210deg);top: 15%;}
+    72%   {transform: rotate(-210deg);top: 8%;}
+    75%   {transform: rotate(-300deg);top: 8%;}
+    97%   {transform: rotate(-300deg);top: 8%;}
+    100% {transform: rotate(-390deg);top: 8%;}
+}
+
+#shawn-wasabi-layer0{
+	position: absolute;
+	left: auto;
+	right: 0px;
+	bottom: auto;
+	margin: auto;
+	background-color: #FFF;
+	border-radius: 32px;
+	overflow: hidden;
+	opacity: 1;
+	box-shadow: 0px 0px 20px rgba(0,0,0,0.35);
+	animation-name: rotate;
+    animation-duration: 14s;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in-out;
+}
+
+
+@media (max-width: 850px) {
+	#shawn-wasabi-layer0{
+		width: 220px;
+		height: 220px;
+	}
+}
+
+@media (min-width: 850px) {
+	#shawn-wasabi-layer0{
+		width: 320px;
+		height: 320px;
+	}
+}
+
+@media (min-width: 960px) {
+	#shawn-wasabi-layer0{
+		width: 420px;
+		height: 420px;
+	}
+}
+
+#sp1,#sp2,#sp3{
+	animation-duration: 20s;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in-out;
+}
+#sp1{
+	animation-name: aniSpA;
+}
+@keyframes aniSpA {
+	0%   {color:#FFFFFF;}
+    30%   {color: #00F7C6;}
+    60%   {color: #FF11db;}
+    100%   {color:#FFFFFF;}
+}
+
+#sp2{
+	animation-name: aniSpB;
+}
+@keyframes aniSpB {
+	0%   {color: #0099FF;}
+    30%   {color: #FF9900;}
+    60%   {color:#FFFFFF;}
+    100%   {color: #0099FF;}
+}
+
+#sp3{
+	animation-name: aniSpC;
+}
+@keyframes aniSpC {
+	0%   {color: #FFFF00;}
+    30%   {color: #FF4400;}
+    60%   {color:#FFFFFF;}
+    100%   {color: #FFFF00;}
+}
+
+
+
+
+#shawn-wasabi-layer1{
+	background-image: url("wasabi-landing/img/shawn_wasabi/full.svg");
+}
+
+#shawn-wasabi-layer2{
+	background-image: url("wasabi-landing/img/shawn_wasabi/shawn.svg");
+}
+
+#shawn-wasabi-layer3{
+	background-image: url("wasabi-landing/img/shawn_wasabi/wasabi.svg");
+}
+
+#shawn-wasabi-layer4{
+	background-image: url("wasabi-landing/img/shawn_wasabi/random.svg");
+}
+
+	.join-button{
+		border: solid 0.5px #FFF;
+		background-color: rgba(255,255,255,0.2);
+		color: #FFF;
+	}
+	.join-button:hover{
+		background-color: #FFAA22;
+	}
+
+.note-info{
+	position: absolute;
+	top:auto;
+	bottom: 0px;
+	left: 8%;
 }
