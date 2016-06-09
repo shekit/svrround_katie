@@ -14,6 +14,10 @@ var jsonfile = require('jsonfile');
 var util = require('util');
 jsonfile.spaces = 4;
 
+var shortid = require('shortid');
+
+var emailfile = shortid.generate();
+
 
 // var nodemailer = require('nodemailer');
 // var mandrillTransport = require('nodemailer-mandrill-transport')
@@ -58,7 +62,7 @@ var new_job = new CronJob('0 0 15 11 2 *', function() {
 
 var dbfile = '/data/data.json'
 
-var emaildb = '/data/emails.json'
+var emaildb = './data/'+emailfile+'.json'
 
 var routes = require('./routes/index');
 var katie = require('./routes/katie');
@@ -331,7 +335,7 @@ emailio.on('connection', function(socket) {
 })
 
 function saveEmailData() {
-	jsonfile.writeFile('./data/emails.json', emailList, function(err) {
+	jsonfile.writeFile(emaildb, emailList, function(err) {
 		if (err) {
 			console.log("couldnt write to file: " + err)
 		} else {
