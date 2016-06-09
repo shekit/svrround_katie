@@ -66,6 +66,7 @@ $(document).ready(function() {
 	window.socket = io(socket_url + "/katiestream")
 
 	var chatForm = $("#chat-form");
+	var emailForm = $("#sign-up");
 	var inviteForm = $("#invite-form")
 	var chatMessage = $("#chat-input-message");
 
@@ -98,24 +99,48 @@ $(document).ready(function() {
 
 	var socketemail = io(socket_url + "/email")
 
-	var form = $("#signup");
 
 	var emailField = $(".email")
 
-	form.on('submit', function(event) {
-		event.preventDefault();
 
+	// emailForm.on('submit', function(event){
+	// 	event.preventDefault();
+	// 	console.log("form")
+
+	// 	var message = emailField.val();
+
+	// 	if (message) {
+	// 		socketemail.emit('email', message);
+	// 		console.log("form email")
+	// 		//show thank you
+	// 		//form.hide();
+	// 		$("#signupForm").hide();
+	// 	}
+
+	// 	emailField.val("");
+	// })
+
+	function validateEmail(email) {
+  		var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  		return re.test(email);
+	}
+
+	$(".signup-btn").on('click', function(event){
 		var message = emailField.val();
 
-		if (message) {
-			socketemail.emit('email', message);
+		var testMessage = validateEmail(message)
 
+
+
+		if (message && testMessage) {
+			socketemail.emit('email', message);
+			console.log("form email")
 			//show thank you
 			//form.hide();
 			$("#signupForm").hide();
+			emailField.val("");
 		}
 
-		emailField.val("");
 	})
 
 	$("body").on('click', '#signupForm', function(event) {
@@ -126,6 +151,8 @@ $(document).ready(function() {
 		}
 		
 	})
+
+
 
 	$(document).on('submit', "#invite-form", function(e) {
 		e.preventDefault();
@@ -578,7 +605,7 @@ $(document).ready(function() {
 		window.addEventListener("resize", onWindowResize, false);
 
 		function onWindowResize() {
-			console.log('resize')
+			//console.log('resize')
 			if (renderer) renderer.setSize(window.innerWidth, window.innerHeight);
 			if (features.emojiDash) features.emojiDash.emojiContainer.center().position(AUTO, window.innerHeight - features.emojiDash.emojiContainer.size().height);
 		}

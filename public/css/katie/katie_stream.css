@@ -192,6 +192,7 @@ video{
 	width: 20%;
 	height: 100%;
 	min-width: 255px;
+	max-width: 255px;
 
 }
 
