@@ -4,11 +4,40 @@ $(document).ready(function() {
 		html: true
 	});
 
-	$('#chat-input-message').emojiPicker({
-		height: '300px',
-		width: '450px',
-		iconBackgroundColor: 'white'
+		$('#chat-input-message').emojiPicker({
+		height: '280px',
+		width: '400px',
+		iconBackgroundColor: 'transparent'
 	});
+
+
+	$.ajax({
+		url: 'https://randomuser.me/api/',
+		dataType: 'json',
+		success: function(data) {
+
+			window.user = {};
+			user.name = data.results[0].login.username;
+
+			//pick random color for username
+
+			user.color = {};
+			user.color.r = Math.floor(Math.random() * 150 + 105);
+			user.color.g = Math.floor(Math.random() * 150 + 105);
+			user.color.b = Math.floor(Math.random() * 150 + 105);
+
+			// get user ip address
+
+			$.getJSON('https://api.ipify.org?format=jsonp&callback=?',
+				function(data) {
+					user.ip = data.ip;
+					socket.emit('ip', data.ip);
+				}
+			);
+
+		}
+	});
+
 
 	$('#container, #chat-widget').mousedown(function() {
 		if ($('.popover').is(":visible")) $('.popover').hide();
@@ -17,7 +46,7 @@ $(document).ready(function() {
 	});
 
 	$('#container').on('mousedown', function() {
-		if (features.banner.visible && mouseIsCenter()) window.open('https://soundcloud.com/duendita', '_blank')
+		if (features.banner.visible && mouseIsCenter()) window.open('https://soundcloud.com/sssshawnnnn/', '_blank')
 	});
 
 	$('#container').on('mousemove', function() {
@@ -35,7 +64,7 @@ $(document).ready(function() {
 	var socket_url = "http://localhost:3000"
 	window.socket = io(socket_url + "/katiestream")
 
-	var form = $("#chat-form");
+	var chatForm = $("#chat-form");
 	var inviteForm = $("#invite-form")
 	var chatMessage = $("#chat-input-message");
 
@@ -48,18 +77,23 @@ $(document).ready(function() {
 
 	var chatVisible = true;
 
-	form.on('submit', function(event) {
+	chatForm.on('submit', function(event) {
+
 		event.preventDefault();
-		$('.emojiPicker').hide();
 
 		var message = chatMessage.val();
 
-		if (message) {
-			socket.emit('chatMessage', message)
-		}
+		//send message to server for broadcast
 
-		chatMessage.val("");
-	})
+		if (message) socket.emit('chatMessage', {
+			user: user,
+			message: message
+		});
+
+		chatMessage.val('');
+		$('.emojiPicker').hide();
+
+	});
 
 	$(document).on('submit', "#invite-form", function(e) {
 		e.preventDefault();
@@ -104,52 +138,71 @@ $(document).ready(function() {
 		$(".join").hide();
 	})
 
-	socket.on('chatMessage', function(msg) {
-		if (placeholder.is(":visible")) {
-			placeholder.hide();
-		}
+	
+	socket.on('chatMessage', function(data) {
 
-		if (msg) {
-			var li = "<li>" + msg + "</li>"
-			chatList.prepend(li);
+		//if initial placeholder text in chat is still there remove it
+
+		if (placeholder.is(':visible')) placeholder.hide();
+
+		if (data.message) {
+
+			//create name node
+
+			var nameContainer = document.createElement('div');
+			nameContainer = $(nameContainer);
+			nameContainer.html(data.user.name + ' ');
+			nameContainer.css('color', 'rgb(' + data.user.color.r + ',' + data.user.color.g + ',' + data.user.color.b + ')');
+
+			//if message is big enough put username on new line
+
+			var msgColVal = 'col-md-12 col-sm-12 col-lg-12 col-xs-12';
+			var nameColVal = 'col-md-12';
+
+			if (data.message.length < 25) {
+				msgColVal = 'col-md-7 col-sm-7 col-lg-7 col-xs-7';
+				nameColVal = 'col-md-5 col-sm-5 col-lg-5 col-xs-5';
+			}
+
+			$(nameContainer).addClass(nameColVal);
+
+			//create msg node, add name to it, prepend to chat
+
+			var msgContainer = document.createElement('li');
+			msgContainer = $(msgContainer);
+			msgContainer.addClass('container');
+			msgContainer.html('<div style="text-align:left; font-size:13px" class="' + msgColVal + '" >' + data.message + '</div>');
+			msgContainer.append(nameContainer);
+			chatList.prepend(msgContainer);
+
 		}
-	})
+	});
+
 
 	socket.on('recipe', function(msg) {
 		console.log("got recipe")
 	})
 
-	$("body").on('click', '.toggle-chat', function(event) {
+	$('body').on('click', '.toggle-chat', function(event) {
 		event.preventDefault();
+
+		chatIcon = $('#chat-icon');
 
 		if (chatVisible) {
 			chatWidget.hide();
-			toggleChat.find('span').removeClass('glyphicon-remove')
-			toggleChat.find('span').addClass('glyphicon-comment')
+			chatIcon.attr('src', '/images/ui_openChat.svg');
 			chatVisible = false;
-			chatWrapper.removeClass('shadow')
 		} else {
 			chatVisible = true;
 			chatWidget.show();
-			toggleChat.find('span').removeClass('glyphicon-comment');
-			toggleChat.find('span').addClass('glyphicon-remove')
-			chatWrapper.addClass('shadow')
+			chatIcon.attr('src', '/images/ui_closeChat.svg');
 		}
-	})
+	});
 
 	$("body").on('click', '#info', function(event) {
 		event.preventDefault();
 		$("#info").hide();
 	})
-
-
-	// get ip address
-	$.getJSON("https://api.ipify.org?format=jsonp&callback=?",
-		function(json) {
-			console.log("My public IP address is: ", json.ip);
-			socket.emit("ip", json.ip)
-		}
-	);
 
 
 	// ------------COMPATABILITY CHECK ------------------
@@ -380,12 +433,6 @@ $(document).ready(function() {
 
 		//---------------------------------
 
-		window.addEventListener("resize", onWindowResize, false);
-
-		function onWindowResize() {
-			renderer.setSize(window.innerWidth, window.innerHeight);
-		}
-
 		var geometry2 = new THREE.BoxGeometry(4, 4, 4);
 		var material2 = new THREE.MeshBasicMaterial({
 			color: 0x00ff00
@@ -496,10 +543,17 @@ $(document).ready(function() {
 
 	}
 
-})
+		window.addEventListener("resize", onWindowResize, false);
+
+		function onWindowResize() {
+			console.log('resize')
+			if (renderer) renderer.setSize(window.innerWidth, window.innerHeight);
+			if (features.emojiDash) features.emojiDash.emojiContainer.center().position(AUTO, window.innerHeight - features.emojiDash.emojiContainer.size().height);
+		}
+
+});
 
 //------ FEATURES ---- //
-
 features = {};
 
 function setup() {
@@ -589,7 +643,7 @@ emojiDash.prototype.fireEmoji = function() {
 
 	var emojiBg = createImg(self.latestEmoji)
 
-	emojiBg.position(random(150, windowWidth - 200), random(0, windowHeight - random(100, 400)))
+	emojiBg.position(random(0, windowWidth - 200), random(0, windowHeight - 200))
 	emojiBg.addClass('animated-fast rubberBand')
 
 	emojiBg.elt.addEventListener('animationend', function() {

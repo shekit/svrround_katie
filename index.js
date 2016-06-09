@@ -6,7 +6,7 @@ var bodyParser = require('body-parser');
 var cors = require('cors');
 var twit = require('twit');
 
-var config = require('./config/config.js')
+var config = require('./config/config-dev.js')
 
 //var T = new twit(config);
 
@@ -255,6 +255,7 @@ katiestreamio.on('connection', function(socket) {
 	socket.on("emojiVote", function(data){
 		viewerStats[socket.id]["reaction"][data] += 1;
 		katiedashboardio.emit("reaction", data)
+		katiestreamio.emit("emojiVote", data)
 	})
 
 	socket.on('disconnect', function() {

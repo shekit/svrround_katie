@@ -1,7 +1,11 @@
+
 html, body, canvas{
 	margin: 0;
 	padding: 0;
-	background: #000;
+	background: #888;
+	overflow: hidden;
+	background-image:url('http://az616578.vo.msecnd.net/files/2016/05/16/635989609636555808-1411640769_concert-audience.jpg');
+
 }
 
 /**** WELCOME SCREEN ****/
@@ -17,24 +21,6 @@ html, body, canvas{
 }
 
 
-/*.modal-header {
-	font-size:16px;
-	height: 150px;
-}
-*/
-
-/*#social-links{
-	bottom:0;
-	left:50%;
-	padding-top:15px;
-	position:absolute;
-}*/
-/*
-#social-container{
-	left:100px;
-
-}*/
-
 #hashtag{
 	position: absolute;
 	bottom: 0;
@@ -48,15 +34,102 @@ html, body, canvas{
 }
 
 /**** CHAT *****/
-#chat-wrapper{
-	position: absolute;
-	top:0;
-	right: 0;
-	width: 20%;
-	height: 100%;
-	min-width: 300px;
 
+
+.shadow {
+	box-shadow: 0 0 5px 2px #333;
+	
 }
+
+.placeholder-text {
+	color: #ddd;
+	font-weight: 300;
+}
+
+
+.invite-input{
+	margin-right:3px;
+}
+
+
+.popover{
+	min-width:400px;
+}
+
+
+.no-padding-right{
+	padding-right: 0;
+	padding-left: 0;
+}
+
+.no-padding-left {
+	padding-left: 0;
+	padding-right: 0;
+}
+
+
+canvas{
+	position: absolute;
+	left: 0;
+}
+video{
+	position: absolute;
+	left: 0;
+}
+
+#hearts {
+	background: black;
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	top:0px;
+	left: 0px;
+	z-index: -5;
+	/*display: none;*/
+}
+
+.input-group-addon {
+	padding: 0;
+	border: none;
+}
+
+#info {
+	position: absolute;
+	width: auto;
+	font-size: 14px;
+	bottom: 10px;
+	left:10px;
+	background: rgba(0,0,0,0.5);
+	padding: 10px;
+	color: #fff;
+	cursor: pointer;
+}
+
+
+.glyphicon {
+	color: #ef4136;
+	font-size: 16px;
+}
+
+
+.dismiss-info {
+	font-style: italic;
+	font-size: 11px;
+}
+
+
+#container:hover{
+	cursor: -webkit-grab; cursor: -moz-grab;
+}
+
+#container:active{
+	cursor: -webkit-grabbing; cursor: -moz-grabbing;
+}
+
+
+
+/**** CHAT *****/
+
 
 .emoji-icon-con {
     display: inline-table;
@@ -76,16 +149,28 @@ html, body, canvas{
 }
 
 #emoji-box{
-	background-color: rgba(50,50,50,.6);
+	background: rgba(0,0,0,0.3);
 	z-index:123;
+}
+
+#chat-wrapper{
+	position: absolute;
+	top:0;
+	right: 0;
+	width: 20%;
+	height: 100%;
+	min-width: 255px;
+
 }
 
 .shadow {
 	box-shadow: 0 0 5px 2px #333;
-	
 }
 
 .placeholder-text {
+	position: relative;
+	top:50%;
+	text-align: center;
 	color: #ddd;
 	font-weight: 300;
 }
@@ -94,40 +179,6 @@ html, body, canvas{
 	position: relative;
 	height: 100%;
 	min-width: 100%;
-}
-
-#chat-toggle {
-	width: 50px;
-	width: 50px;
-	position: absolute;
-	top: 10px;
-	right: 0;
-	z-index:200;
-	font-size: 20px;
-}
-
-#social-toggle {
-	width: 50px;
-	width: 50px;
-	position: absolute;
-	top: 10px;
-	right: 25px;
-	z-index:200;
-	font-size: 20px;
-}
-
-.invite-input{
-	margin-right:3px;
-}
-
-#invite-toggle {
-	width: 50px;
-	width: 50px;
-	position: absolute;
-	top: 10px;
-	right: 55px;
-	z-index:200;
-	font-size: 20px;
 }
 
 .toggle-chat, .toggle-chat:link, .toggle-chat:visited, .toggle-chat:active {
@@ -153,67 +204,81 @@ html, body, canvas{
 }
 
 #chat-spacer {
-	height:10%;
+	height:6%;
+	min-height:40px;
 	width: 100%;
-	border-bottom: 1px solid #000;
+	/*border-bottom: 1px solid #000;*/
 	background: rgba(0,0,0,.1);
 }
 
 #chat-box {
-	height: 70%;
+	height: 80%;
 	width: 100%;
 	overflow-y: scroll;
-	padding: 10px 10px;
+	padding: 10px;
+}
+
+#chat-message-list div{
+	position: relative;
+	right:0;
+	padding:0;
+	padding-top:4px;
+	text-align:right;
+	font-size: 10px;
 }
 
 #chat-message-list li {
 	padding-top: 5px;
-	padding-bottom: 5px;
-	border-bottom: 1px solid #ccc;
+	padding-bottom: 8px !important;
+	border-bottom: 1px solid rgba(204,204,204,.15);
 	font-size: 12px;
 	color: #eee;
+	width: 100%;
+	padding: 0;
 }
-
-#container:hover{
-	cursor: -webkit-grab; cursor: -moz-grab;
-}
-
-#container:active{
-	cursor: -webkit-grabbing; cursor: -moz-grabbing;
-}
-
-
 
 .chat-row {
 	margin-right: 0;
-	margin-left: 35px;
+	margin-left: 0;
 }
 
 #chat-message {
-	border-top: 1px solid #000;
 	height: 19%;
-	width: 100%;
 }
+
+
+#chat-input-message{
+	padding-right:40px;
+	height:43px;
+	position: relative;
+	left:0;
+	bottom:0;
+}
+
+.btn-send{
+	right:0;
+	bottom:0;
+	margin-left:5px;
+	height:43px;
+}
+
 
 #chat-form {
 	position: fixed;
 	bottom: 0;
+	margin:0;
 	z-index: 200;
 }
 
-.no-padding-right{
+.no-padding{
 	padding-right: 0;
 	padding-left: 0;
-}
-
-.no-padding-left {
-	padding-left: 0;
-	padding-right: 0;
 }
 
 .btn, .form-control {
 	border-radius: 0;
 }
+
 
 .form-control:focus{
 	box-shadow: none;
@@ -245,33 +310,64 @@ html, body, canvas{
 	color: #fff;
 }
 
-canvas{
+
+#container{
+	width:100%;
+	height:100%;
 	position: absolute;
-	left: 0;
+	left:0;
+	margin:0;
+	padding:0;
 }
-video{
+
+
+.invite-input{
+	margin-right:3px;
+}
+
+#chat-toggle {
 	position: absolute;
-	left: 0;
+	top: 10px;
+	right: 14px;
+	z-index:200;
+	font-size: 20px;
 }
+
+#social-toggle {
+	position: absolute;
+	top: 10px;
+	right: 47px;
+	z-index:200;
+	font-size: 20px;
+}
+
+#invite-toggle {
+	position: absolute;
+	top: 10px;
+	right: 79px;
+	z-index:200;
+	font-size: 20px;
+}
+
+#invite-text{
+	font-size:14px;
+	color: #ef4136;
+}
+
 #logo{
 	position: absolute;
 	margin: 5px;
 	z-index: 10;
+	top:0;
+	left:2;
 }
 #logo-img{
 	width: 150px;
 	height: auto;
 }
 
-#hearts {
-	background: black;
-	position: absolute;
-	height: 100%;
-	width: 100%;
-	top:0px;
-	left: 0px;
-	z-index: -5;
-	/*display: none;*/
+.ui-icon{
+	width:22px;
 }
 
 .input-group-addon {
@@ -279,31 +375,7 @@ video{
 	border: none;
 }
 
-#info {
-	position: absolute;
-	width: auto;
-	font-size: 14px;
-	bottom: 10px;
-	left:10px;
-	background: rgba(0,0,0,0.5);
-	padding: 10px;
-	color: #fff;
-	cursor: pointer;
-}
-
 #more-info {
 	font-size:18px;
 	margin:18px;
-}
-
-
-.glyphicon {
-	color: #ef4136;
-	font-size: 16px;
-}
-
-
-.dismiss-info {
-	font-style: italic;
-	font-size: 11px;
 }
