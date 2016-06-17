@@ -607,14 +607,14 @@ $(document).ready(function() {
 			}
 
 
-			if (y > .95) {
+			// if (y > .95) {
 
-				features.banner.visible = true;
+			// 	features.banner.visible = true;
 
-			} else {
+			// } else {
 
-				features.banner.visible = false;
-			}
+			// 	features.banner.visible = false;
+			// }
 
 			texture.needsUpdate = true;
 			requestAnimationFrame(animate);
