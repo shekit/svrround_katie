@@ -80,9 +80,9 @@ $(document).ready(function() {
 
 	});
 
-	$('#container').on('mousedown', function() {
-		if (features.banner.visible && mouseIsCenter()) window.open('https://soundcloud.com/sssshawnnnn/', '_blank')
-	});
+	// $('#container').on('mousedown', function() {
+	// 	if (features.banner.visible && mouseIsCenter()) window.open('https://soundcloud.com/sssshawnnnn/', '_blank')
+	// });
 
 	$('#container').on('mousemove', function() {
 		// if (mouseIsCenter() && features.banner.visible) $('#container').css('cursor','pointer')
