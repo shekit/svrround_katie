@@ -9,23 +9,38 @@ block css
 
 block content
   #main-frame
-      .header
-        #logo-box-back.logo-box
-          #logo-box-middle.logo-box
-            #logo-box-Front.logo-box
-      .cover-info.lamama
-        h1 I AM BLEEDING ALL OVER THE PLACE
-        h3#sub-title A Living History Tour
-        |       Live in 360 from La Mama's Ellen Stewart Theatre
-        #place
-          h3 7:00 PM (EST)
-          |         Powered by SVRROUND™️ (beta)
-        #join-button.join-button Join
-        #wait-button.join-button Stream starts at 7pm EST
-      #videoFrame
-        video(id='preroll-video', src='./images/lamama/video.mp4', autoplay='autoplay', loop='loop')
-      p.note-info
-        | * Streaming quality is based on your internet connection. Safari not supported.
+    .header
+      
+      #logo-box-back.logo-box
+        #logo-box-middle.logo-box
+          #logo-box-Front.logo-box
+
+    .cover-info.lamama.sumsung.wasabi
+      h2
+        | Shawn 
+        span(style='color:#85ff8f') Wasabi
+      h1
+        | + Friends : 
+        span#sp1 N
+        span#sp2 Y
+        span#sp3 C
+        |  2016
+      |       Live Stream with SVRROUND™️
+      #sub-title It's a party
+      #place
+        h4 7:00 PM (EST)
+        |         June 9, 2016
+        br
+        |         Baby's All Right, Brooklyn, NYC
+      #join-button-wasabi.join-button Join
+      #wait-button-wasabi.join-button Stream starts at 7pm EST
+    #shawn-wasabi-layer0.shawn-wasabi
+      #shawn-wasabi-layer1.shawn-wasabi
+        #shawn-wasabi-layer2.shawn-wasabi
+          #shawn-wasabi-layer3.shawn-wasabi
+            #shawn-wasabi-layer4.shawn-wasabi
+    p.note-info
+      | * Streaming quality is based on your internet connection. Safari not supported.
 
   div(id="stream-frame")
     div(class="modal fade" id="social-modal" role="dialog")

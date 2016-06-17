@@ -96,7 +96,7 @@ $(document).ready(function() {
 	console.log("Stream");
 
 	var socket_url = "http://45.55.213.136:80"
-		// var socket_url = "http://localhost:3000"
+	// var socket_url = "http://localhost:3000"
 	window.socket = io(socket_url + "/katiestream")
 
 	var chatForm = $("#chat-form");
@@ -208,8 +208,8 @@ $(document).ready(function() {
 	socket.on('status', function(msg) {
 		if (msg == true) {
 			//change button to join
-			$("#wait-button-wasabi").hide();
-			$("#join-button-wasabi").show()
+			$("#wait-button").hide();
+			$("#join-button").show()
 		}
 	})
 
@@ -221,17 +221,17 @@ $(document).ready(function() {
 	socket.on('activate', function(msg) {
 		// activate join button for connected clients
 
-		$("#wait-button-wasabi").hide();
-		$("#join-button-wasabi").show()
+		$("#wait-button").hide();
+		$("#join-button").show()
 	})
 
 	socket.on('deactivate', function(msg) {
 		// throw up a message to say stream is over
 		$("#main-frame").show();
 		$("#stream-frame").hide();
-		$("#join-button-wasabi").hide();
-		$("#wait-button-wasabi").show();
-		$("#wait-button-wasabi").html("Be back soon, don't go anywhere!")
+		$("#join-button").hide();
+		$("#wait-button").show();
+		$("#wait-button").html("Be back soon, don't go anywhere!")
 	})
 
 	socket.on('full-deactivate', function(msg) {
@@ -239,9 +239,9 @@ $(document).ready(function() {
 			// throw up a message to say stream is over
 		$("#main-frame").show();
 		$("#stream-frame").hide();
-		$("#join-button-wasabi").hide();
-		$("#wait-button-wasabi").show();
-		$("#wait-button-wasabi").html("<a href='http://svrround.com'>Stream's over! Sign up for more!</a>")
+		$("#join-button").hide();
+		$("#wait-button").show();
+		$("#wait-button").html("<a href='http://svrround.com'>Stream's over! Sign up for more!</a>")
 	})
 
 	socket.on('resume-stream', function(msg) {
@@ -249,9 +249,9 @@ $(document).ready(function() {
 			// throw up a message to say stream is over
 		$("#main-frame").hide();
 		$("#stream-frame").show();
-		$("#join-button-wasabi").hide();
-		$("#wait-button-wasabi").show();
-		$("#wait-button-wasabi").html("Be back soon, don't go anywhere!")
+		$("#join-button").hide();
+		$("#wait-button").show();
+		$("#wait-button").html("Be back soon, don't go anywhere!")
 	})
 
 
@@ -472,7 +472,7 @@ $(document).ready(function() {
 		//this number into the center of the sphere - half of radius of sphere, aka 80 / 2
 		camera.position.x = 0;
 		camera.position.y = 0;
-		camera.position.z = -10;
+		camera.position.z = -0.001;
 
 		//Mouse motion controls
 		controls = new THREE.OrbitControls(camera, renderer.domElement);
@@ -500,7 +500,7 @@ $(document).ready(function() {
 		loader = new THREE.ColladaLoader();
 		// loader.options.convertUpAxis = true;
 		loader.options.centerGeometry = true;
-		loader.load('./obj/ricohmorphedUV.dae', function(collada) {
+		loader.load('./obj/360_2_1.dae', function(collada) {
 
 			//need to set dae as the collada scene and use that in traverse
 			dae = collada.scene;
@@ -511,8 +511,15 @@ $(document).ready(function() {
 
 					//need to add the mesh child we just created rather than the actual dae object loaded
 					child.material = material;
-					child.rotation.x = Math.PI * (0.52);
-					child.rotation.y = Math.PI * (-0.3);
+
+					child.position.x = 0;
+
+					child.position.y = 0;
+
+					child.position.z = 0;
+
+					child.rotation.x = Math.PI / 2;
+
 					scene.add(child);
 
 					//Play the Video Stream
@@ -572,7 +579,7 @@ $(document).ready(function() {
 
 		}
 
-		addBanner();
+		//addBanner();
 
 
 		//----------- ANIMATE -------------
@@ -783,61 +790,72 @@ emojiDash.prototype.addListeners = function() {
 }
 
 
+window.showVideo = function() {
+	console.log('show video');
+	$('#videoFrame').show();
+	$('#videoFrame').addClass('animated fadeIn')
+};
 
-// LANDING PAGE: WASABI
+
+// LANDING PAGE: LA MAMA
 
 
 window.addEventListener("load", function() {
 
-	animate.loop(1);
-	document.getElementById("wait-button-wasabi").addEventListener("click", function() {
-		animate.timeCheck();
-	});
+		setTimeout(showVideo, 4000);
 
-	document.getElementById("join-button-wasabi").addEventListener("click", function() {
+	document.getElementById("join-button").addEventListener("click", function() {
 		$('#main-frame').hide();
 		$('#stream-frame').show();
 	});
 
+	window.video = {};
+
+	video.scaleAdjust = function(windowWidth, windowHeight) {
+
+		var videoFrame = document.getElementById('videoFrame');
+
+
+
+		var videoFrameWidth = videoFrame.offsetWidth;
+		var videoFrameHeight = videoFrame.offsetHeight;
+
+		// console.log("1",windowWidth, windowHeight);
+		// console.log("2",videoFrameWidth, videoFrameHeight);
+
+		if (windowWidth / windowHeight >= (16 / 9)) {
+
+
+			var scaleFactor = windowWidth / 640;
+			videoFrame.style.transform = "scale(" + scaleFactor + ")";
+
+		} else {
+
+			var scaleFactor = windowHeight / 360;
+			videoFrame.style.transform = "scale(" + scaleFactor + ")";
+
+		}
+
+	}
+
+	var mainFrame = document.getElementById('main-frame');
+
+	var windowWidth = mainFrame.offsetWidth;
+	var windowHeight = mainFrame.offsetHeight;
+
+	video.scaleAdjust(windowWidth, windowHeight);
+
+	//video js
+
+
+
 });
 
-var animate = {};
-var canJoin = false;
+window.addEventListener("resize", function() {
 
-animate.loop = function(step) {
+	var mainFrame = document.getElementById('main-frame');
+	var windowWidth = mainFrame.offsetWidth;
+	var windowHeight = mainFrame.offsetHeight;
+	video.scaleAdjust(windowWidth, windowHeight);
 
-	if (step > 4) {
-		step = 1;
-		for (i = 2; i < 5; i++) {
-			document.getElementById('shawn-wasabi-layer' + i).style.opacity = 0;
-		}
-	}
-
-	document.getElementById('shawn-wasabi-layer' + step).style.opacity = 1;
-
-	step++;
-	setTimeout(function() {
-		animate.loop(step);
-	}, 400);
-}
-
-animate.timeCheck = function() {
-	var showTime = 1665498800;
-	var unixTimeStamp = Math.round(+new Date() / 1000);
-
-	if (unixTimeStamp < showTime) {
-		//not till showTime;
-		//alert("not yet");
-		var transform = document.getElementById("place").style.transform;
-		if (transform == "" || transform == "rotateY(0deg)") {
-			document.getElementById("place").style.transform = "rotateY(360deg)";
-		} else {
-			document.getElementById("place").style.transform = "rotateY(0deg)";
-		}
-
-	} else {
-		//join!
-		// alert("join");
-	}
-
-}
+});
